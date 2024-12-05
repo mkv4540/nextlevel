@@ -34,7 +34,7 @@ const DynamicButton = () => {
       flex: 1,
       display: "flex",
       padding: "10px",
-      overflowX: "scroll",
+      // overflowX: "scroll",
       scrollbarWidth: "thin", // Firefox scrollbar width
     },
     scrollbar: {

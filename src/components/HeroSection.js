@@ -11,7 +11,7 @@ const HeroSection = () => {
         width: "100%",
         height: "600px",
         // backgroundColor: "#e8d0f2",
-        backgroundImage: "linear-gradient(190deg,#fff,#7c7ef7)",
+        backgroundImage: "linear-gradient(190deg,#7c7ef7,#fff)",
       }}
     >
       {/* Left Content */}

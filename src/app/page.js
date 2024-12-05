@@ -24,6 +24,10 @@ export default function Home() {
         Practice Quizzes
       </h2>
       <QuizCard quizData={quizData} />
+      <div style={{ padding: "20px" }}>
+        <h1>Contact Us</h1>
+        <p>Contact details go here...</p>
+      </div>
     </>
   );
 }
