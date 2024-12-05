@@ -1,15 +1,18 @@
-import './globals.css';
+import Footer from "../components/Footer";
 
-export const metadata = {
-  title: 'Next Level Acadmy',
-  description: 'Making Better Tomarrow',
-};
-
+// src/app/layout.js
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body
+        style={{
+          backgroundImage: "linear-gradient(190deg,#fff,#d3d4f2)", // Replace with your desired color
+          margin: "0",
+          padding: "0",
+        }}
+      >
         {children}
+        <Footer />
       </body>
     </html>
   );
