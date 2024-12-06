@@ -1,9 +1,23 @@
+"use client";
+import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import DynamicButton from "../components/DynamicButton";
 import HeroSection from "../components/HeroSection";
 import Navbar from "../components/Navbar";
 import QuizCard from "../components/QuizCard";
 import { quizData } from "../utils/quizData";
+
 export default function Home() {
+  const { isLoaded, userId } = useAuth();
+
+  // Show a loader until authentication is loaded
+  if (!isLoaded) return <div>Loading...</div>;
+
+  // Redirect unauthenticated users to sign-in page
+  if (!userId) {
+    return <RedirectToSignIn />;
+  }
+
+  // Render the authenticated content
   return (
     <>
       <Navbar />
@@ -15,9 +29,9 @@ export default function Home() {
           fontSize: "30px",
           fontWeight: "bold",
           color: "#333",
-          display: "flex", // Use flexbox for centering
-          justifyContent: "center", // Center horizontally
-          alignItems: "center", // Center vertically (if needed)
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           textAlign: "center",
         }}
       >
