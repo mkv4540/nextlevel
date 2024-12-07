@@ -25,7 +25,7 @@ export default function Home() {
         <h1
           style={{
             textAlign: "center",
-            background: "#727eed",
+            background: "#94a5f2",
             color: "white",
             fontSize: "40px",
           }}
@@ -44,7 +44,7 @@ export default function Home() {
           justifyContent: "center", // Center horizontally
           alignItems: "center", // Center vertically (if needed)
           textAlign: "center",
-          background: "#727eed",
+          background: "#94a5f2",
         }}
       >
         Practice Quizzes

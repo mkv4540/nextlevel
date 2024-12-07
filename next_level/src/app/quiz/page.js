@@ -1,7 +1,8 @@
+'use client'
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
-const QuizPage = () => {
+export default function QuizPage  ()  {
   const questions = [
     { question: "What is the capital of France?", options: ["Paris", "London", "Berlin", "Madrid"], correct: 0 },
     { question: "What is 2 + 2?", options: ["3", "4", "5", "6"], correct: 1 },
@@ -108,4 +109,4 @@ const QuizPage = () => {
   );
 };
 
-export default QuizPage;
+
