@@ -1,10 +1,11 @@
-"use client";
+"use client"
 
-import { useState } from "react";
+import { useState,  } from "react";
+import { useRouter } from "next/navigation";
 
 const DynamicCard = ({ data }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const router = useRouter();
   const styles = {
     cardContainer: {
       display: "flex",
@@ -149,11 +150,11 @@ const DynamicCard = ({ data }) => {
           <button
             style={{ ...styles.button, ...styles.quizButton }}
             onClick={(e) => {
-              e.stopPropagation(); // Prevent click bubbling
-              window.open(data.quizLink || "#", "_blank"); // Replace with actual quiz link
-            }}
+            e.stopPropagation(); // Prevent click bubbling
+            router.push("/quiz"); // Redirect to the quiz page
+          }}
           >
-            Quiz
+          Quiz
           </button>
 
           {/* Three Dots (Dropdown Trigger) */}

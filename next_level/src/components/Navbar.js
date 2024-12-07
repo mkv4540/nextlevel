@@ -30,8 +30,8 @@ const Navbar = () => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "10px 20px",
-        backgroundColor: "#0a0b59", // Navbar background color
-        color: "#fff",
+        backgroundColor: "#94a5f2", // Navbar background color
+        color: "#050505",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
       }}
     >
@@ -49,10 +49,10 @@ const Navbar = () => {
 
       {/* Links Section */}
       <div style={{ display: "flex", alignItems: "center", gap: "50px" }}>
-        <Link href="/" style={{ color: "white", textDecoration: "none" }}>
+        <Link href="/" style={{ color: "black", textDecoration: "none" }}>
           Home
         </Link>
-        <Link href="/about" style={{ color: "white", textDecoration: "none" }}>
+        <Link href="/about" style={{ color: "black", textDecoration: "none" }}>
           About
         </Link>
         <div
@@ -131,7 +131,7 @@ const Navbar = () => {
         </div>
         <Link
           href="/contact"
-          style={{ color: "white", textDecoration: "none" }}
+          style={{ color: "black", textDecoration: "none" }}
         >
           Contact
         </Link>

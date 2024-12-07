@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react';
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -5,7 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 // Register ChartJS components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ResultPage = () => {
+export default function ResultPage ()  {
   const [answers, setAnswers] = useState([]);
   const [isClient, setIsClient] = useState(false);
 
@@ -74,4 +75,4 @@ const ResultPage = () => {
   );
 };
 
-export default ResultPage;
+
