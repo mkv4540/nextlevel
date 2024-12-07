@@ -2,7 +2,7 @@
 import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import DynamicButton from "../components/DynamicButton";
 import HeroSection from "../components/HeroSection";
-import Navbar from "../components/Navbar";
+
 import QuizCard from "../components/QuizCard";
 import { quizData } from "../utils/quizData";
 
@@ -20,19 +20,31 @@ export default function Home() {
   // Render the authenticated content
   return (
     <>
-      <Navbar />
       <HeroSection />
+      <div>
+        <h1
+          style={{
+            textAlign: "center",
+            background: "#727eed",
+            color: "white",
+            fontSize: "40px",
+          }}
+        >
+          EXPLORE OUR COURSES
+        </h1>
+      </div>
       <DynamicButton />
       <h2
         style={{
           marginTop: "30px",
           fontSize: "30px",
           fontWeight: "bold",
-          color: "#333",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          color: "white",
+          display: "flex", // Use flexbox for centering
+          justifyContent: "center", // Center horizontally
+          alignItems: "center", // Center vertically (if needed)
           textAlign: "center",
+          background: "#727eed",
         }}
       >
         Practice Quizzes

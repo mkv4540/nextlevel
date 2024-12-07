@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = () => {
-  // State to manage dropdown visibility
   const [dropdownOpen, setDropdownOpen] = useState({
     about: false,
     services: false,
@@ -23,12 +22,17 @@ const Navbar = () => {
   return (
     <nav
       style={{
+        position: "fixed", // Fix the navbar to the top
+        top: "0", // Align it to the top
+        width: "98%", // Make it span the full width
+        zIndex: "1000", // Ensure it stays above other elements
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
         padding: "10px 20px",
-        backgroundColor: "#0a0b59",
+        backgroundColor: "#0a0b59", // Navbar background color
         color: "#fff",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
       }}
     >
       {/* Logo Section */}
@@ -45,46 +49,12 @@ const Navbar = () => {
 
       {/* Links Section */}
       <div style={{ display: "flex", alignItems: "center", gap: "50px" }}>
-        {/* About Us Dropdown */}
-        <div
-          style={{ position: "relative", cursor: "pointer" }}
-          onMouseEnter={() => toggleDropdown("about")}
-          onMouseLeave={() => toggleDropdown("about")}
-        >
-          About Us
-          {dropdownOpen.about && (
-            <div
-              style={{
-                position: "absolute",
-                top: "30px",
-                left: "0",
-                backgroundColor: "#fff",
-                color: "#333",
-                padding: "10px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                borderRadius: "5px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <Link
-                href="#our-team"
-                style={{ textDecoration: "none", color: "#333" }}
-              >
-                Our Team
-              </Link>
-              <Link
-                href="#our-mission"
-                style={{ textDecoration: "none", color: "#333" }}
-              >
-                Our Mission
-              </Link>
-            </div>
-          )}
-        </div>
-
-        {/* Services Dropdown */}
+        <Link href="/" style={{ color: "white", textDecoration: "none" }}>
+          Home
+        </Link>
+        <Link href="/about" style={{ color: "white", textDecoration: "none" }}>
+          About
+        </Link>
         <div
           style={{ position: "relative", cursor: "pointer" }}
           onMouseEnter={() => toggleDropdown("services")}
@@ -122,8 +92,6 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
-        {/* Quiz Dropdown */}
         <div
           style={{ position: "relative", cursor: "pointer" }}
           onMouseEnter={() => toggleDropdown("quiz")}
@@ -161,49 +129,16 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
-        {/* Contact Dropdown */}
-        <div
-          style={{ position: "relative", cursor: "pointer" }}
-          onMouseEnter={() => toggleDropdown("contact")}
-          onMouseLeave={() => toggleDropdown("contact")}
+        <Link
+          href="/contact"
+          style={{ color: "white", textDecoration: "none" }}
         >
           Contact
-          {dropdownOpen.contact && (
-            <div
-              style={{
-                position: "absolute",
-                top: "30px",
-                left: "0",
-                backgroundColor: "#fff",
-                color: "#333",
-                padding: "10px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-                borderRadius: "5px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <Link
-                href="#email"
-                style={{ textDecoration: "none", color: "#333" }}
-              >
-                Email
-              </Link>
-              <Link
-                href="#phone"
-                style={{ textDecoration: "none", color: "#333" }}
-              >
-                Phone
-              </Link>
-            </div>
-          )}
-        </div>
+        </Link>
       </div>
 
-      {/* Search Section */}
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* Search and Login Section */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <input
           type="text"
           placeholder="Search..."
@@ -217,7 +152,6 @@ const Navbar = () => {
         <button
           style={{
             padding: "5px 10px",
-            marginLeft: "5px",
             backgroundColor: "#555",
             color: "#fff",
             border: "none",
@@ -226,6 +160,19 @@ const Navbar = () => {
           }}
         >
           Search
+        </button>
+        <button
+          style={{
+            padding: "5px 10px",
+            backgroundColor: "green",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer",
+            borderRadius: "3px",
+          }}
+          onClick={() => alert("Redirecting to Login Page...")}
+        >
+          Login
         </button>
       </div>
     </nav>
