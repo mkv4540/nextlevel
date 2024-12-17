@@ -47,7 +47,7 @@ const DynamicButton = () => {
       <div className="w-full px-4">
         {selectedData && (
           <Swiper
-            slidesPerView={3} // Number of cards visible
+            slidesPerView={4} // Number of cards visible
             spaceBetween={1} // Space between cards
             navigation={true} // Enable navigation arrows
             modules={[Navigation]} // Add Swiper modules here

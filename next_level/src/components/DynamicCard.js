@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import router for navigation
 
 const DynamicCard = ({ data }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const router = useRouter(); // Initialize router
 
   const handleDropdownToggle = (e) => {
     e.stopPropagation(); // Prevent card click
@@ -45,7 +47,7 @@ const DynamicCard = ({ data }) => {
         <div className="flex justify-around items-center mt-4 relative">
           {/* Watch on YouTube Button */}
           <button
-            className="px-4 py-2 bg-red-600 text-white rounded-md font-bold transition-colors hover:bg-red-800"
+            className="px-1 py-2 bg-red-600 text-white rounded-md font-bold transition-colors hover:bg-red-800"
             onClick={(e) => {
               e.stopPropagation(); // Prevent click bubbling
               window.open(
@@ -62,7 +64,7 @@ const DynamicCard = ({ data }) => {
             className="px-4 py-2 bg-blue-700 text-white rounded-md font-bold transition-colors hover:bg-blue-800"
             onClick={(e) => {
               e.stopPropagation(); // Prevent click bubbling
-              window.open(data.quizLink || "#", "_blank"); // Replace with actual quiz link
+              router.push("/ytquiz"); // Navigate to the ytquiz page
             }}
           >
             Quiz
