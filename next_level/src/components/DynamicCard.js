@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import router for navigation
@@ -6,6 +6,98 @@ import { useRouter } from "next/navigation"; // Import router for navigation
 const DynamicCard = ({ data }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const router = useRouter(); // Initialize router
+
+import { useState,  } from "react";
+import { useRouter } from "next/navigation";
+
+const DynamicCard = ({ data }) => {
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const router = useRouter();
+  const styles = {
+    cardContainer: {
+      display: "flex",
+      justifyContent: "flex-start",
+      padding: "20px",
+    },
+    card: {
+      width: "300px",
+      margin: "20px",
+      padding: "15px",
+      border: "1px solid #ddd",
+      borderRadius: "10px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      textAlign: "center",
+      backgroundColor: "#f9f9f9",
+      cursor: "pointer",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    },
+    cardHover: {
+      transform: "scale(1.05)",
+      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+    },
+    title: {
+      fontSize: "18px",
+      fontWeight: "bold",
+      color: "#333",
+      marginBottom: "10px",
+    },
+    thumbnail: {
+      width: "100%",
+    },
+    buttonContainer: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+      marginTop: "15px",
+      position: "relative", // Required for dropdown positioning
+    },
+    button: {
+      padding: "10px 15px",
+      backgroundColor: "Red",
+      color: "white",
+      border: "none",
+      borderRadius: "5px",
+      fontWeight: "bold",
+      cursor: "pointer",
+      transition: "background-color 0.3s ease",
+    },
+    quizButton: {
+      backgroundColor: "#28A745",
+    },
+    moreOptions: {
+      fontSize: "24px",
+      color: "#333",
+      cursor: "pointer",
+      marginLeft: "10px",
+    },
+    dropdownMenu: {
+      position: "absolute",
+      top: "50px",
+      right: "0",
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      borderRadius: "5px",
+      zIndex: "10",
+      display: "flex",
+      flexDirection: "column",
+      gap: "10px",
+      padding: "10px",
+      minWidth: "150px",
+    },
+    dropdownItem: {
+      padding: "8px 10px",
+      borderRadius: "3px",
+      cursor: "pointer",
+      color: "#333",
+      textDecoration: "none",
+      backgroundColor: "#f9f9f9",
+      transition: "background-color 0.3s ease",
+    },
+    dropdownItemHover: {
+      backgroundColor: "#ddd",
+    },
+  };
+
 
   const handleDropdownToggle = (e) => {
     e.stopPropagation(); // Prevent card click
@@ -63,11 +155,17 @@ const DynamicCard = ({ data }) => {
           <button
             className="px-4 py-2 bg-blue-700 text-white rounded-md font-bold transition-colors hover:bg-blue-800"
             onClick={(e) => {
+
               e.stopPropagation(); // Prevent click bubbling
               router.push("/ytquiz"); // Navigate to the ytquiz page
             }}
+
+            e.stopPropagation(); // Prevent click bubbling
+            router.push("/quiz"); // Redirect to the quiz page
+          }}
+
           >
-            Quiz
+          Quiz
           </button>
 
           {/* Three Dots (Dropdown Trigger) */}

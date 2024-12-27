@@ -21,6 +21,23 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 w-full z-50 flex justify-between items-center p-3 bg-green-700 text-white shadow-md">
+
+    <nav
+      style={{
+        position: "fixed", // Fix the navbar to the top
+        top: "0", // Align it to the top
+        width: "98%", // Make it span the full width
+        zIndex: "1000", // Ensure it stays above other elements
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "10px 20px",
+        backgroundColor: "#94a5f2", // Navbar background color
+        color: "#050505",
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
+      }}
+    >
+
       {/* Logo Section */}
       <div className="flex items-center gap-2 rounded-full">
         <Image
@@ -34,11 +51,19 @@ const Navbar = () => {
       </div>
 
       {/* Links Section */}
+
       <div className="flex items-center gap-12">
         <Link href="/" className="text-white hover:text-gray-300">
           Home
         </Link>
         <Link href="/about" className="text-white hover:text-gray-300">
+
+      <div style={{ display: "flex", alignItems: "center", gap: "50px" }}>
+        <Link href="/" style={{ color: "black", textDecoration: "none" }}>
+          Home
+        </Link>
+        <Link href="/about" style={{ color: "black", textDecoration: "none" }}>
+
           About
         </Link>
         <Link href="/studymaterial" className="text-white hover:text-gray-300">
@@ -61,7 +86,14 @@ const Navbar = () => {
             </div>
           )}
         </div>
+
         <Link href="/contact" className="text-white hover:text-gray-300">
+
+        <Link
+          href="/contact"
+          style={{ color: "black", textDecoration: "none" }}
+        >
+
           Contact
         </Link>
       </div>

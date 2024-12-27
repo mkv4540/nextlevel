@@ -22,12 +22,37 @@ export default function Home() {
     <>
       <HeroSection />
       <div>
+
         <h1 className="text-center text-black text-4xl animate-fadeInDown">
+        <h1
+          style={{
+            textAlign: "center",
+            background: "#94a5f2",
+            color: "white",
+            fontSize: "40px",
+          }}
+        >
+
           EXPLORE OUR COURSES
         </h1>
       </div>
       <DynamicButton />
+
       <h2 className="mt-8 text-3xl font-bold text-black flex justify-center text-center animate-slideInLeft">
+      <h2
+        style={{
+          marginTop: "30px",
+          fontSize: "30px",
+          fontWeight: "bold",
+          color: "white",
+          display: "flex", // Use flexbox for centering
+          justifyContent: "center", // Center horizontally
+          alignItems: "center", // Center vertically (if needed)
+          textAlign: "center",
+          background: "#94a5f2",
+        }}
+      >
+
         Practice Quizzes
       </h2>
       <QuizCard quizData={quizData} />
