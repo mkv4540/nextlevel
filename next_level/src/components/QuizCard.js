@@ -1,6 +1,6 @@
 "use client";
 
-const QuizCard = ({ quizData }) => {
+export default function  QuizCard  ({ quizData })  {
   return (
     <div className="flex flex-wrap justify-start items-start gap-5 px-5 py-5">
       {quizData.map((quiz, index) => (
@@ -29,4 +29,4 @@ const QuizCard = ({ quizData }) => {
   );
 };
 
-export default QuizCard;
+
