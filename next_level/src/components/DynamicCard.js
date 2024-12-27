@@ -1,75 +1,221 @@
-"use client"
+// "use client"
+
+// import { useState } from "react";
+// import { useRouter } from "next/navigation"; // Import router for navigation
+
+
+
+// import { useState,  } from "react";
+// import { useRouter } from "next/navigation";
+
+// const DynamicCard = ({ data }) => {
+//   const [dropdownVisible, setDropdownVisible] = useState(false);
+//   const router = useRouter();
+//   const styles = {
+//     cardContainer: {
+//       display: "flex",
+//       justifyContent: "flex-start",
+//       padding: "20px",
+//     },
+//     card: {
+//       width: "300px",
+//       margin: "20px",
+//       padding: "15px",
+//       border: "1px solid #ddd",
+//       borderRadius: "10px",
+//       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//       textAlign: "center",
+//       backgroundColor: "#f9f9f9",
+//       cursor: "pointer",
+//       transition: "transform 0.2s ease, box-shadow 0.2s ease",
+//     },
+//     cardHover: {
+//       transform: "scale(1.05)",
+//       boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+//     },
+//     title: {
+//       fontSize: "18px",
+//       fontWeight: "bold",
+//       color: "#333",
+//       marginBottom: "10px",
+//     },
+//     thumbnail: {
+//       width: "100%",
+//     },
+//     buttonContainer: {
+//       display: "flex",
+//       justifyContent: "space-around",
+//       alignItems: "center",
+//       marginTop: "15px",
+//       position: "relative", // Required for dropdown positioning
+//     },
+//     button: {
+//       padding: "10px 15px",
+//       backgroundColor: "Red",
+//       color: "white",
+//       border: "none",
+//       borderRadius: "5px",
+//       fontWeight: "bold",
+//       cursor: "pointer",
+//       transition: "background-color 0.3s ease",
+//     },
+//     quizButton: {
+//       backgroundColor: "#28A745",
+//     },
+//     moreOptions: {
+//       fontSize: "24px",
+//       color: "#333",
+//       cursor: "pointer",
+//       marginLeft: "10px",
+//     },
+//     dropdownMenu: {
+//       position: "absolute",
+//       top: "50px",
+//       right: "0",
+//       backgroundColor: "#fff",
+//       boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+//       borderRadius: "5px",
+//       zIndex: "10",
+//       display: "flex",
+//       flexDirection: "column",
+//       gap: "10px",
+//       padding: "10px",
+//       minWidth: "150px",
+//     },
+//     dropdownItem: {
+//       padding: "8px 10px",
+//       borderRadius: "3px",
+//       cursor: "pointer",
+//       color: "#333",
+//       textDecoration: "none",
+//       backgroundColor: "#f9f9f9",
+//       transition: "background-color 0.3s ease",
+//     },
+//     dropdownItemHover: {
+//       backgroundColor: "#ddd",
+//     },
+//   };
+
+
+//   const handleDropdownToggle = (e) => {
+//     e.stopPropagation(); // Prevent card click
+//     setDropdownVisible((prev) => !prev);
+//   };
+
+//   const handleDropdownItemClick = (action) => {
+//     alert(`You selected: ${action}`);
+//     setDropdownVisible(false); // Close dropdown after selection
+//   };
+
+//   const handleCardClick = (ytURL) => {
+//     window.open(ytURL, "_blank");
+//   };
+
+//   return (
+//     <div
+//       className="flex justify-start p-5"
+//       onClick={() => handleCardClick(data.ytURl)}
+//     >
+//       <div className="w-72 m-5 p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50 text-center cursor-pointer transition-transform hover:scale-105 hover:shadow-lg">
+//         {/* Thumbnail */}
+//         <img
+//           src={
+//             data.ytThumb
+//               ? data.ytThumb
+//               : "https://img.youtube.com/vi/GB2kRJlR9v4/0.jpg"
+//           }
+//           alt="YouTube Thumbnail"
+//           className="w-full rounded-md"
+//         />
+
+//         {/* Title */}
+//         <div className="text-lg font-bold text-gray-800 mt-3 mb-2">
+//           {data.title || "Title"}
+//         </div>
+
+//         {/* Button Container */}
+//         <div className="flex justify-around items-center mt-4 relative">
+//           {/* Watch on YouTube Button */}
+//           <button
+//             className="px-1 py-2 bg-red-600 text-white rounded-md font-bold transition-colors hover:bg-red-800"
+//             onClick={(e) => {
+//               e.stopPropagation(); // Prevent click bubbling
+//               window.open(
+//                 data.ytURl || "https://www.youtube.com/watch?v=GB2kRJlR9v4",
+//                 "_blank"
+//               );
+//             }}
+//           >
+//             Watch on YouTube
+//           </button>
+
+//           {/* Quiz Button */}
+//           <button
+//             className="px-4 py-2 bg-blue-700 text-white rounded-md font-bold transition-colors hover:bg-blue-800"
+//             onClick={(e) => {
+
+//               e.stopPropagation(); // Prevent click bubbling
+//               router.push("/ytquiz"); // Navigate to the ytquiz page
+//             }}
+
+//             e.stopPropagation(); // Prevent click bubbling
+//             router.push("/quiz"); // Redirect to the quiz page
+//           }}
+
+//           >
+//           Quiz
+//           </button>
+
+//           {/* Three Dots (Dropdown Trigger) */}
+//           <span
+//             className="text-2xl text-gray-700 cursor-pointer ml-3"
+//             onClick={handleDropdownToggle}
+//           >
+//             &#x22EE; {/* Unicode for three dots */}
+//           </span>
+
+//           {/* Dropdown Menu */}
+//           {dropdownVisible && (
+//             <div className="absolute top-12 right-0 bg-white shadow-lg rounded-md z-10 flex flex-col gap-2 p-3 min-w-[150px]">
+//               <span
+//                 className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+//                 onClick={() => handleDropdownItemClick("Edit")}
+//               >
+//                 Edit
+//               </span>
+//               <span
+//                 className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+//                 onClick={() => handleDropdownItemClick("Delete")}
+//               >
+//                 Delete
+//               </span>
+//               <span
+//                 className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+//                 onClick={() => handleDropdownItemClick("Share")}
+//               >
+//                 Share
+//               </span>
+//             </div>
+//           )}
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DynamicCard;
+
+"use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import router for navigation
-
-const DynamicCard = ({ data }) => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const router = useRouter(); // Initialize router
-
-import { useState,  } from "react";
 import { useRouter } from "next/navigation";
 
 const DynamicCard = ({ data }) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const router = useRouter();
+
+  // Define styles (optional if you're using Tailwind for everything)
   const styles = {
-    cardContainer: {
-      display: "flex",
-      justifyContent: "flex-start",
-      padding: "20px",
-    },
-    card: {
-      width: "300px",
-      margin: "20px",
-      padding: "15px",
-      border: "1px solid #ddd",
-      borderRadius: "10px",
-      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-      textAlign: "center",
-      backgroundColor: "#f9f9f9",
-      cursor: "pointer",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease",
-    },
-    cardHover: {
-      transform: "scale(1.05)",
-      boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
-    },
-    title: {
-      fontSize: "18px",
-      fontWeight: "bold",
-      color: "#333",
-      marginBottom: "10px",
-    },
-    thumbnail: {
-      width: "100%",
-    },
-    buttonContainer: {
-      display: "flex",
-      justifyContent: "space-around",
-      alignItems: "center",
-      marginTop: "15px",
-      position: "relative", // Required for dropdown positioning
-    },
-    button: {
-      padding: "10px 15px",
-      backgroundColor: "Red",
-      color: "white",
-      border: "none",
-      borderRadius: "5px",
-      fontWeight: "bold",
-      cursor: "pointer",
-      transition: "background-color 0.3s ease",
-    },
-    quizButton: {
-      backgroundColor: "#28A745",
-    },
-    moreOptions: {
-      fontSize: "24px",
-      color: "#333",
-      cursor: "pointer",
-      marginLeft: "10px",
-    },
     dropdownMenu: {
       position: "absolute",
       top: "50px",
@@ -93,22 +239,21 @@ const DynamicCard = ({ data }) => {
       backgroundColor: "#f9f9f9",
       transition: "background-color 0.3s ease",
     },
-    dropdownItemHover: {
-      backgroundColor: "#ddd",
-    },
   };
 
-
+  // Dropdown visibility toggle
   const handleDropdownToggle = (e) => {
     e.stopPropagation(); // Prevent card click
     setDropdownVisible((prev) => !prev);
   };
 
+  // Dropdown item click handler
   const handleDropdownItemClick = (action) => {
     alert(`You selected: ${action}`);
     setDropdownVisible(false); // Close dropdown after selection
   };
 
+  // Card click handler
   const handleCardClick = (ytURL) => {
     window.open(ytURL, "_blank");
   };
@@ -139,7 +284,7 @@ const DynamicCard = ({ data }) => {
         <div className="flex justify-around items-center mt-4 relative">
           {/* Watch on YouTube Button */}
           <button
-            className="px-1 py-2 bg-red-600 text-white rounded-md font-bold transition-colors hover:bg-red-800"
+            className="px-4 py-2 bg-red-600 text-white rounded-md font-bold transition-colors hover:bg-red-800"
             onClick={(e) => {
               e.stopPropagation(); // Prevent click bubbling
               window.open(
@@ -155,17 +300,11 @@ const DynamicCard = ({ data }) => {
           <button
             className="px-4 py-2 bg-blue-700 text-white rounded-md font-bold transition-colors hover:bg-blue-800"
             onClick={(e) => {
-
               e.stopPropagation(); // Prevent click bubbling
-              router.push("/ytquiz"); // Navigate to the ytquiz page
+              router.push("/quiz"); // Redirect to the quiz page
             }}
-
-            e.stopPropagation(); // Prevent click bubbling
-            router.push("/quiz"); // Redirect to the quiz page
-          }}
-
           >
-          Quiz
+            Quiz
           </button>
 
           {/* Three Dots (Dropdown Trigger) */}
@@ -178,21 +317,21 @@ const DynamicCard = ({ data }) => {
 
           {/* Dropdown Menu */}
           {dropdownVisible && (
-            <div className="absolute top-12 right-0 bg-white shadow-lg rounded-md z-10 flex flex-col gap-2 p-3 min-w-[150px]">
+            <div style={styles.dropdownMenu}>
               <span
-                className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+                style={styles.dropdownItem}
                 onClick={() => handleDropdownItemClick("Edit")}
               >
                 Edit
               </span>
               <span
-                className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+                style={styles.dropdownItem}
                 onClick={() => handleDropdownItemClick("Delete")}
               >
                 Delete
               </span>
               <span
-                className="px-3 py-2 text-gray-700 rounded-md hover:bg-gray-200 cursor-pointer"
+                style={styles.dropdownItem}
                 onClick={() => handleDropdownItemClick("Share")}
               >
                 Share
@@ -206,3 +345,4 @@ const DynamicCard = ({ data }) => {
 };
 
 export default DynamicCard;
+

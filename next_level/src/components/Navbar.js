@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-const Navbar = () => {
+export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState({
     about: false,
     services: false,
@@ -20,24 +20,14 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full z-50 flex justify-between items-center p-3 bg-green-700 text-white shadow-md">
-
     <nav
+      className="fixed top-0 w-full z-50 flex justify-between items-center p-3 bg-green-700 text-white shadow-md"
       style={{
-        position: "fixed", // Fix the navbar to the top
-        top: "0", // Align it to the top
-        width: "98%", // Make it span the full width
-        zIndex: "1000", // Ensure it stays above other elements
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "10px 20px",
         backgroundColor: "#94a5f2", // Navbar background color
         color: "#050505",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
       }}
     >
-
       {/* Logo Section */}
       <div className="flex items-center gap-2 rounded-full">
         <Image
@@ -51,24 +41,17 @@ const Navbar = () => {
       </div>
 
       {/* Links Section */}
-
       <div className="flex items-center gap-12">
-        <Link href="/" className="text-white hover:text-gray-300">
+        <Link href="/" className="text-black hover:text-gray-500">
           Home
         </Link>
-        <Link href="/about" className="text-white hover:text-gray-300">
-
-      <div style={{ display: "flex", alignItems: "center", gap: "50px" }}>
-        <Link href="/" style={{ color: "black", textDecoration: "none" }}>
-          Home
-        </Link>
-        <Link href="/about" style={{ color: "black", textDecoration: "none" }}>
-
+        <Link href="/about" className="text-black hover:text-gray-500">
           About
         </Link>
-        <Link href="/studymaterial" className="text-white hover:text-gray-300">
+        <Link href="/studymaterial" className="text-black hover:text-gray-500">
           Study Material
         </Link>
+
         <div
           className="relative cursor-pointer"
           onMouseEnter={() => toggleDropdown("quiz")}
@@ -87,13 +70,7 @@ const Navbar = () => {
           )}
         </div>
 
-        <Link href="/contact" className="text-white hover:text-gray-300">
-
-        <Link
-          href="/contact"
-          style={{ color: "black", textDecoration: "none" }}
-        >
-
+        <Link href="/contact" className="text-black hover:text-gray-500">
           Contact
         </Link>
       </div>
@@ -117,6 +94,4 @@ const Navbar = () => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

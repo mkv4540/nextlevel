@@ -1,8 +1,3 @@
-
-export default function Quiz() {
-  return <h1>Contact Us</h1>;
-}
-
 'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";

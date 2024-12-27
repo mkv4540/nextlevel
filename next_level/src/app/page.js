@@ -19,42 +19,44 @@ export default function Home() {
 
   // Render the authenticated content
   return (
-    <>
+    <div>
       <HeroSection />
       <div>
 
-        <h1 className="text-center text-black text-4xl animate-fadeInDown">
+        <div className="text-center text-black text-4xl animate-fadeInDown">
         <h1
           style={{
             textAlign: "center",
-            background: "#94a5f2",
-            color: "white",
+            
+            color: "Black",
             fontSize: "40px",
           }}
         >
 
           EXPLORE OUR COURSES
         </h1>
+        </div>
       </div>
       <DynamicButton />
 
-      <h2 className="mt-8 text-3xl font-bold text-black flex justify-center text-center animate-slideInLeft">
+      <div className="mt-8 text-3xl font-bold text-black flex justify-center text-center animate-slideInLeft">
       <h2
         style={{
           marginTop: "30px",
           fontSize: "30px",
           fontWeight: "bold",
-          color: "white",
+          color: "Black",
           display: "flex", // Use flexbox for centering
           justifyContent: "center", // Center horizontally
           alignItems: "center", // Center vertically (if needed)
           textAlign: "center",
-          background: "#94a5f2",
+
         }}
       >
 
         Practice Quizzes
       </h2>
+      </div>
       <QuizCard quizData={quizData} />
       <div className="p-5">
         <h1 className="text-xl font-bold">Contact Us</h1>
@@ -85,6 +87,6 @@ export default function Home() {
           }
         }
       `}</style>
-    </>
+    </div>
   );
 }
