@@ -1,3 +1,4 @@
+"use client"
 import { SignOutButton, useUser } from "@clerk/nextjs";
 
 export default function DashboardPage() {

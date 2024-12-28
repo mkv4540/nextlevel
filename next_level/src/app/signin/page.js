@@ -1,38 +1,18 @@
-// "use client";
-
-// import { SignIn } from "@clerk/nextjs";
-
-// export default function SignInPage() {
-//   return (
-//     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-//       <SignIn
-//         path="/signin"
-//         routing="path"
-//         redirectUrl="/dashboard"
-//         appearance={{
-//           layout: {
-//             showRememberMe: true, // "Remember Me" for a month
-//           },
-//         }}
-//         signInOptions={{
-//           strategy: "phone_number_code", // Use OTP via phone
-//         }}
-//       />
-//     </div>
-//   );
-// }
 "use client";
 import { useState } from "react";
-import { PhoneSignIn } from "@clerk/nextjs";
-import { useAuth, RedirectToHome } from "@clerk/nextjs";
+import { SignIn } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function SignInPage() {
   const [rememberMe, setRememberMe] = useState(false);
   const { isLoaded, userId } = useAuth();
+  const router = useRouter();
 
-  // Redirect authenticated users to home page
+  // Redirect authenticated users to the home page
   if (isLoaded && userId) {
-    return <RedirectToHome />;
+    router.push("/");
+    return null;
   }
 
   // Handle remember me option change
@@ -42,10 +22,9 @@ export default function SignInPage() {
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <PhoneSignIn
+      <SignIn
         redirectUrl="/"
         afterSignInUrl="/"
-        // Remember me option for session persistence
         options={{
           rememberMe,
         }}
@@ -63,6 +42,4 @@ export default function SignInPage() {
     </div>
   );
 }
-
-
 

@@ -1,23 +1,25 @@
 "use client";
-import { useAuth, RedirectToHome } from "@clerk/nextjs";
-import { PhoneSignUp } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const { isLoaded, userId } = useAuth();
+  const router = useRouter();
 
-  // Redirect authenticated users to home page
+  // Redirect authenticated users to the home page
   if (isLoaded && userId) {
-    return <RedirectToHome />;
+    router.push("/");
+    return null;
   }
 
   return (
     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-      <PhoneSignUp
+      <SignUp
         redirectUrl="/"
-        // This will prevent the password input from showing
+        afterSignUpUrl="/"
         hidePassword={true}
       />
     </div>
   );
 }
-

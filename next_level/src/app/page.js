@@ -1,5 +1,4 @@
 "use client";
-
 import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import DynamicButton from "../components/DynamicButton";
 import HeroSection from "../components/HeroSection";
@@ -21,41 +20,33 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
-      <div>
-
-        <div className="text-center text-black text-4xl animate-fadeInDown">
+      <div className="text-center text-black text-4xl animate-fadeInDown">
         <h1
           style={{
             textAlign: "center",
-            
             color: "Black",
             fontSize: "40px",
           }}
         >
-
           EXPLORE OUR COURSES
         </h1>
-        </div>
       </div>
       <DynamicButton />
-
       <div className="mt-8 text-3xl font-bold text-black flex justify-center text-center animate-slideInLeft">
-      <h2
-        style={{
-          marginTop: "30px",
-          fontSize: "30px",
-          fontWeight: "bold",
-          color: "Black",
-          display: "flex", // Use flexbox for centering
-          justifyContent: "center", // Center horizontally
-          alignItems: "center", // Center vertically (if needed)
-          textAlign: "center",
-
-        }}
-      >
-
-        Practice Quizzes
-      </h2>
+        <h2
+          style={{
+            marginTop: "30px",
+            fontSize: "30px",
+            fontWeight: "bold",
+            color: "Black",
+            display: "flex", // Use flexbox for centering
+            justifyContent: "center", // Center horizontally
+            alignItems: "center", // Center vertically
+            textAlign: "center",
+          }}
+        >
+          Practice Quizzes
+        </h2>
       </div>
       <QuizCard quizData={quizData} />
       <div className="p-5">
@@ -90,3 +81,4 @@ export default function Home() {
     </div>
   );
 }
+
