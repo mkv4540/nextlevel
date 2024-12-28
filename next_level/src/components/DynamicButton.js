@@ -1,8 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import DynamicCard from "./DynamicCard"; // Import DynamicCard
-import { dataAccordingToBtnSelected } from "../utils/data"; // Import data
+import DynamicCard from "./DynamicCard"; // Import your card component
+import { dataAccordingToBtnSelected } from "../utils/data"; // Import your data
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css"; // Import Swiper CSS
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 const DynamicButton = () => {
   const [selectedButton, setSelectedButton] = useState("RRB");
@@ -25,108 +29,66 @@ const DynamicButton = () => {
     }
   }, [selectedButton]);
 
-  // Inline styles
-  const styles = {
-    containermain: {
-      width: "100%",
-      flexDirection: "row",
-      gap: "10px",
-      flex: 1,
-      display: "flex",
-      padding: "10px",
-      // overflowX: "scroll",
-      scrollbarWidth: "thin", // Firefox scrollbar width
-    },
-    scrollbar: {
-      WebkitScrollbar: {
-        width: "20px", // Width of the scrollbar
-        height: "6px",
-      },
-      WebkitScrollbarTrack: {
-        backgroundColor: "white", // Track color
-      },
-      WebkitScrollbarThumb: {
-        backgroundColor: "gray",
-        borderRadius: "10px",
-        width: "10px",
-      },
-    },
-    dynamicButton: {
-      padding: "8px 14px",
-      borderRadius: "20px",
-      border: "1px solid #86a1ae",
-      backgroundColor: "#fff",
-      color: "#000",
-      cursor: "pointer",
-      whiteSpace: "nowrap", // Prevent text wrapping
-      overflow: "hidden", // Hide overflow text
-      textOverflow: "ellipsis", // Show ellipsis if text overflows
-      transition: "all 0.3s ease", // Smooth hover effects
-    },
-    dynamicButtonHover: {
-      border: "1px solid #0c1c0c",
-      color: "#0c1c0c",
-    },
-    dynamicButtonSelected: {
-      backgroundColor: "#0c1c0c",
-      border: "1px solid #fff",
-      color: "#fff",
-    },
-    carouselContainer: {
-      display: "flex",
-      flexDirection: "row",
-      gap: "10px",
-      overflowX: "auto",
-      padding: "10px",
-      justifyContent: "flex-start",
-    },
-  };
-
   return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <main style={styles.containermain}>
+    <div className="flex flex-col items-center">
+      {/* Button Container */}
+      <main className="flex flex-row flex-wrap gap-4 p-4 justify-center">
         {buttonName.map((item, index) => (
-          <div key={index}>
-            <Button
-              title={item}
-              selectedButton={selectedButton}
-              setSelectedButton={setSelectedButton}
-              styles={styles}
-            />
-          </div>
+          <Button
+            key={index}
+            title={item}
+            selectedButton={selectedButton}
+            setSelectedButton={setSelectedButton}
+          />
         ))}
       </main>
-      <div style={styles.carouselContainer}>
-        {selectedData &&
-          selectedData.map((item, index) => (
-            <DynamicCard key={index} data={item} />
-          ))}
+
+      {/* Dynamic Cards Carousel */}
+      <div className="w-full px-4">
+        {selectedData && (
+          <Swiper
+            slidesPerView={4} // Number of cards visible
+            spaceBetween={1} // Space between cards
+            navigation={true} // Enable navigation arrows
+            modules={[Navigation]} // Add Swiper modules here
+            className="mySwiper"
+            breakpoints={{
+              640: {
+                slidesPerView: 1, // 1 slide for small screens
+                spaceBetween: 10,
+              },
+              1024: {
+                slidesPerView: 2, // 2 slides for medium screens
+                spaceBetween: 15,
+              },
+              1280: {
+                slidesPerView: 4, // 3 slides for large screens
+                spaceBetween: 20,
+              },
+            }}
+          >
+            {selectedData.map((item, index) => (
+              <SwiperSlide key={index}>
+                <DynamicCard data={item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
       </div>
     </div>
   );
 };
 
-const Button = ({ title, selectedButton, setSelectedButton, styles }) => {
+const Button = ({ title, selectedButton, setSelectedButton }) => {
   const isSelected = selectedButton === title;
 
   return (
     <button
-      style={{
-        ...styles.dynamicButton,
-        ...(isSelected ? styles.dynamicButtonSelected : {}),
-      }}
-      onMouseEnter={(e) => {
-        if (!isSelected) {
-          e.currentTarget.style.border = styles.dynamicButtonHover.border;
-          e.currentTarget.style.color = styles.dynamicButtonHover.color;
-        }
-      }}
-      onMouseLeave={(e) => {
-        if (!isSelected) {
-          e.currentTarget.style.border = "1px solid #86a1ae";
-          e.currentTarget.style.color = "#000";
-        }
-      }}
+      className={`px-4 py-2 rounded-full border text-black whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-300 ${
+        isSelected
+          ? "bg-black text-white border-white"
+          : "bg-white border-gray-400 hover:border-black hover:text-black"
+      }`}
       onClick={() => setSelectedButton(title)}
     >
       {title.split("_").join(" ")}

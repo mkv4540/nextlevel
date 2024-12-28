@@ -1,43 +1,22 @@
 "use client";
 
 const Footer = () => {
-  const styles = {
-    footer: {
-      backgroundColor: "#333",
-      color: "#fff",
-      textAlign: "center",
-      padding: "20px 0",
-      position: "relative",
-      bottom: "0",
-      width: "100%",
-    },
-    link: {
-      color: "#4CAF50",
-      textDecoration: "none",
-      margin: "0 10px",
-    },
-    text: {
-      margin: "10px 0",
-      fontSize: "14px",
-    },
-  };
-
   return (
-    <footer style={styles.footer}>
-      <p style={styles.text}>
+    <footer className="bg-gray-800 text-white text-center py-5 w-full">
+      <p className="text-sm my-2">
         &copy; {new Date().getFullYear()} Next Level Academy. All rights
         reserved.
       </p>
       <p>
-        <a href="/terms" style={styles.link}>
+        <a href="/terms" className="text-green-500 hover:underline mx-2">
           Terms
         </a>
         |
-        <a href="/privacy" style={styles.link}>
+        <a href="/privacy" className="text-green-500 hover:underline mx-2">
           Privacy Policy
         </a>
         |
-        <a href="/contact" style={styles.link}>
+        <a href="/contact" className="text-green-500 hover:underline mx-2">
           Contact Us
         </a>
       </p>

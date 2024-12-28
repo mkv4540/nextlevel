@@ -1,83 +1,152 @@
-export default function AboutPage() {
+"use client";
+import { useRouter } from "next/navigation";
+
+const AboutPage = () => {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen bg-gray-100" style={{ textAlign: "center" }}>
-      <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-10">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold">About Us</h1>
-          <p className="mt-2 text-lg">
-            Learn more about our mission, values, and the team behind our
-            success.
-          </p>
-        </div>
+    <div className="font-open-sans leading-relaxed p-5 max-w-7xl mx-auto">
+      {/* Header Section */}
+      <header className="text-center mb-10 mt-12">
+        <h1 className="text-5xl font-bold text-blue-600 animate-fadeInDown">
+          About Us
+        </h1>
+        <p className="text-lg text-gray-600 mt-2">
+          Empowering Aspirants to Succeed in Government Exams
+        </p>
       </header>
 
-      <main className="container mx-auto px-4 py-12">
-        <section className="text-center">
-          <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
-          <p className="text-gray-700 text-lg">
-            Our mission is to empower individuals with the tools and knowledge
-            they need to achieve their goals and transform their lives. We
-            strive to create innovative solutions that make a positive impact on
-            the world.
+      {/* Content Section */}
+      <section>
+        {/* Who We Are */}
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-bold text-blue-900 animate-fadeInLeft">
+            Who We Are
+          </h2>
+          <p className="text-lg text-gray-600 mt-2">
+            At <strong>NEXT LEVEL ACADEMY</strong>, we are a team of passionate
+            educators and professionals committed to helping students achieve
+            their dreams through structured study materials, quizzes, and video
+            content.
           </p>
-        </section>
+        </div>
 
-        <section className="mt-12">
-          <h2 className="text-3xl font-bold mb-6 text-center">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-2">Innovation</h3>
-              <p className="text-gray-600">
-                We embrace creativity and innovation to build cutting-edge
-                solutions that solve real-world problems.
-              </p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-2">Integrity</h3>
-              <p className="text-gray-600">
-                We believe in doing the right thing, always, and holding
-                ourselves accountable for our actions.
-              </p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <h3 className="text-xl font-bold mb-2">Community</h3>
-              <p className="text-gray-600">
-                We foster a strong sense of community and collaboration to
-                achieve shared goals.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* What We Offer */}
+        <div className="mb-10 bg-blue-50 rounded-lg p-5">
+          <h2 className="text-2xl font-bold text-blue-600 text-center animate-fadeInUp">
+            What We Offer
+          </h2>
+          <ul className="text-lg text-gray-600 mt-5 space-y-3 list-none">
+            <li>
+              <strong>High-Quality Study Materials:</strong> Expertly curated
+              notes and resources covering the entire syllabus for government
+              exams.
+            </li>
+            <li>
+              <strong>Quizzes to Sharpen Your Skills:</strong> Choose from free
+              and paid quizzes designed to mimic real exam patterns.
+            </li>
+            <li>
+              <strong>Engaging YouTube Channel:</strong> Learn from video
+              lessons, tips, and strategies to ace your exams.
+            </li>
+          </ul>
+        </div>
 
-        <section className="mt-12 text-center">
-          <h2 className="text-3xl font-bold mb-6">Meet the Team</h2>
-          <p className="text-gray-700 text-lg">
-            Our dedicated team is committed to excellence and driven by passion.
+        {/* Why Choose Us */}
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-bold text-blue-900 animate-fadeInRight">
+            Why Choose Us?
+          </h2>
+          <ul className="text-lg text-gray-600 mt-5 space-y-3 list-disc list-inside">
+            <li>Affordable learning options for all budgets.</li>
+            <li>
+              Comprehensive coverage of all major government exams, including
+              SSC, UPSC, Banking, Railways, and State Exams.
+            </li>
+            <li>Interactive learning through quizzes and video content.</li>
+            <li>Expert guidance from experienced educators.</li>
+          </ul>
+        </div>
+
+        {/* Vision Section */}
+        <div className="bg-blue-50 rounded-lg p-5">
+          <h2 className="text-2xl font-bold text-blue-600 text-center animate-zoomIn">
+            Our Vision
+          </h2>
+          <p className="text-lg text-gray-600 text-center mt-2">
+            To revolutionize the way students prepare for government exams by
+            making learning accessible, affordable, and engaging. Together,
+            let’s reach the <strong>Next Level</strong> in your career journey!
           </p>
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Replace with your team members */}
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/public/avatar1.jpg" // Replace with your image
-                alt="Team Member"
-              />
-              <h3 className="text-lg font-bold">John Doe</h3>
-              <p className="text-gray-600">CEO & Founder</p>
-            </div>
-            <div className="bg-white shadow-md rounded-lg p-6">
-              <img
-                className="w-24 h-24 rounded-full mx-auto mb-4"
-                src="/public/avatar2.jpg" // Replace with your image
-                alt="Team Member"
-              />
-              <h3 className="text-lg font-bold">Jane Smith</h3>
-              <p className="text-gray-600">CTO</p>
-            </div>
-            {/* Add more team members here */}
-          </div>
-        </section>
-      </main>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <div className="text-center mt-10">
+        <button
+          className="bg-blue-600 text-white py-3 px-6 text-lg rounded-full shadow-md hover:bg-blue-700 transition-all duration-300"
+          onClick={() => router.push("/quiz")}
+        >
+          Explore Quizzes
+        </button>
+      </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes fadeInDown {
+          from {
+            opacity: 0;
+            transform: translateY(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeInLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes fadeInRight {
+          from {
+            opacity: 0;
+            transform: translateX(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes zoomIn {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default AboutPage;
