@@ -23,7 +23,7 @@ export default function Navbar() {
     <nav
       className="fixed top-0 w-full z-50 flex justify-between items-center p-3 bg-green-700 text-white shadow-md"
       style={{
-        backgroundColor: "#94a5f2", // Navbar background color
+        backgroundColor: "#ffffff", // Navbar background color
         color: "#050505",
         boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
       }}
