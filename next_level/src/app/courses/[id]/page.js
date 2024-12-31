@@ -1,5 +1,4 @@
 'use client';
-
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 
@@ -52,9 +51,9 @@ export default function CoursePage() {
   }
 
   return (
-    <main className=" text-black min-h-screen py-8 px-4 bg-cyan-100">
-      <div className="max-w-8xl mx-auto bg-white ">
-        {/* Header Section */}
+    <main className=" text-black min-h-screen py-8 px-4 bg-blue-100">
+      <div className=" mt-12 w-screen mx-auto bg-gradient-to-t from-white to-cyan-100 ">
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="space-y-4 m-20">
             <h1 className="text-4xl font-bold ">{course.title}</h1>
@@ -77,9 +76,9 @@ export default function CoursePage() {
             />
           </div>
         </div>
-
+        </div>
         {/* Video & Additional Sections */}
-        <div className="mt-12">
+        <div className="mt-12 max-w-8xl mx-auto bg-white">
           <div className="border-t border-gray-300 p-4 flex items-center justify-between">
             <h3 className="font-semibold text-lg">Download All Notes</h3>
             <button
@@ -103,9 +102,100 @@ export default function CoursePage() {
                 Open Notes
               </button>
             </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 2 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 3 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 4 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 5 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 6 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 7 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 8 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 9 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 10 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+            <div className="border-t border-gray-300 p-4 flex items-center justify-between">
+              <h3 className="font-semibold text-lg">Lecture 11 notes -</h3>
+              <button
+                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition"
+                onClick={() => window.open(course.downloadUrl, '_blank')}
+              >
+                Open Notes
+              </button>
+            </div>
+                                                                                                                        
           </div>
         </div>
-      </div>
+      
     </main>
   );
 }
