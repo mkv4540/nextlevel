@@ -1,14 +1,5 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/about/page": "app/about/page.js",
   "/page": "app/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/quiz/page": "app/quiz/page.js",
-  "/signin/page": "app/signin/page.js",
-  "/result/page": "app/result/page.js",
   "/studymaterial/page": "app/studymaterial/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/ytquiz/page": "app/ytquiz/page.js"
+  "/courses/[id]/page": "app/courses/[id]/page.js"
 }
