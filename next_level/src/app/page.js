@@ -6,15 +6,15 @@ import QuizCard from "../components/QuizCard";
 import { quizData } from "../utils/quizData";
 
 export default function Home() {
-  const { isLoaded, userId } = useAuth();
+  // const { isLoaded, userId } = useAuth();
 
-  // Show a loader until authentication is loaded
-  if (!isLoaded) return <div>Loading...</div>;
+  // // Show a loader until authentication is loaded
+  // if (!isLoaded) return <div>Loading...</div>;
 
-  // Redirect unauthenticated users to sign-in page
-  if (!userId) {
-    return <RedirectToSignIn />;
-  }
+  // // Redirect unauthenticated users to sign-in page
+  // if (!userId) {
+  //   return <RedirectToSignIn />;
+  // }
 
   // Render the authenticated content
   return (

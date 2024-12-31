@@ -5,9 +5,9 @@ import "./globals.css";
 // import AboutPage from "./about/page";
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
-    >
+    // <ClerkProvider
+    //   publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    // >
       <html lang="en">
         <body
           style={{
@@ -23,6 +23,6 @@ export default function RootLayout({ children }) {
           <Footer />
         </body>
       </html>
-    </ClerkProvider>
+    // </ClerkProvider>
   );
 }
