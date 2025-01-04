@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.722.0",
     "@clerk/nextjs": "^6.9.6",
     "chart.js": "^4.4.7",
+    "html-entities": "^2.5.2",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "19.0.0-rc-66855b96-20241106",
-    "swiper": "^11.1.15",
-
-    "react-chartjs-2": "^5.2.0"
-    
+    "swiper": "^11.1.15"
   },
   "devDependencies": {
     "@types/node": "^20",
