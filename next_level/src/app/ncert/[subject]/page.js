@@ -13,8 +13,8 @@ export default function NcertSubject() {
   // Expanded chapter structure for all classes
   const chapters = {
     6: [
-      { id: 1, title: "Chapter 1: Introduction", pdfUrl: "/pdfs/class6/chapter1.pdf" },
-      { id: 2, title: "Chapter 2: Basic Concepts", pdfUrl: "/pdfs/class6/chapter2.pdf" },
+      { id: 1, title: "Chapter 1: Introduction", pdfUrl: "https://ncert-notes-nextlevel.s3.ap-south-1.amazonaws.com/Geography/class6-chapter1" },
+      { id: 2, title: "Chapter 2: Basic Concepts", pdfUrl: `https://ncert-notes-nextlevel.s3.ap-south-1.amazonaws.com/${subject}/class6-chapter1` },
       { id: 3, title: "Chapter 3: Advanced Topics", pdfUrl: "/pdfs/class6/chapter3.pdf" },
     ],
     7: [
