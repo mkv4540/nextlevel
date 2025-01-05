@@ -23,9 +23,9 @@ export default function Navbar() {
     <nav
       className="fixed top-0 w-full z-50 flex justify-between items-center p-3 bg-green-700 text-white shadow-md"
       style={{
-        backgroundColor: "#ffffff", // Navbar background color
+        backgroundColor: "#ffffff",
         color: "#050505",
-        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)", // Optional: Add shadow for better visual
+        boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
       }}
     >
       {/* Logo Section */}
@@ -50,6 +50,11 @@ export default function Navbar() {
         </Link>
         <Link href="/studymaterial" className="text-black hover:text-gray-500">
           Study Material
+        </Link>
+        
+        {/* Simple NCERT Link */}
+        <Link href="/ncert" className="text-black hover:text-gray-500">
+          NCERT Books
         </Link>
 
         <div
