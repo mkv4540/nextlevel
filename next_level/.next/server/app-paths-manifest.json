@@ -1,17 +1,6 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/upload/route": "app/api/upload/route.js",
-  "/contact/page": "app/contact/page.js",
-  "/dashboard/page": "app/dashboard/page.js",
-  "/about/page": "app/about/page.js",
-  "/courses/[id]/page": "app/courses/[id]/page.js",
-  "/quiz/page": "app/quiz/page.js",
-  "/signup/page": "app/signup/page.js",
-  "/result/page": "app/result/page.js",
   "/studymaterial/page": "app/studymaterial/page.js",
-  "/page": "app/page.js",
-  "/signin/page": "app/signin/page.js",
-  "/admin/page": "app/admin/page.js",
-  "/ytquiz/page": "app/ytquiz/page.js"
+  "/ncert/[subject]/page": "app/ncert/[subject]/page.js",
+  "/admin/page": "app/admin/page.js"
 }

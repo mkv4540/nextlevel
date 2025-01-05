@@ -78,9 +78,9 @@ export default function Navbar() {
         <Link href="/contact" className="text-black hover:text-gray-500">
           Contact
         </Link>
-        <Link href="/admin" className="text-black hover:text-gray-500">
+        {/* <Link href="/admin" className="text-black hover:text-gray-500">
           Admin
-        </Link>
+        </Link> */}
       </div>
 
       {/* Search and Login Section */}

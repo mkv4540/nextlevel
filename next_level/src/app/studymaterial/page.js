@@ -80,25 +80,25 @@ export default function Home() {
       id: 1,
       subject: "History",
       description: "NCERT History textbooks from Class 6 to 12",
-      imgSrc: "/history-book.png",
+      imgSrc: "/logo.png",
     },
     {
       id: 2,
       subject: "Geography",
       description: "NCERT Geography textbooks from Class 6 to 12",
-      imgSrc: "/geography-book.png",
+      imgSrc: "/logo.png",
     },
     {
       id: 3,
       subject: "Science",
       description: "NCERT Science textbooks from Class 6 to 12",
-      imgSrc: "/science-book.png",
+      imgSrc: "/logo.png",
     },
     {
       id: 4,
       subject: "Mathematics",
       description: "NCERT Mathematics textbooks from Class 6 to 12",
-      imgSrc: "/math-book.png",
+      imgSrc: "/logo.png",
     },
   ];
 
