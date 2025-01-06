@@ -1,98 +1,95 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import DynamicCard from "./DynamicCard"; // Import your card component
-import { dataAccordingToBtnSelected } from "../utils/data"; // Import your data
+import { useState } from "react";
+import DynamicCard from "./DynamicCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; // Import Swiper CSS
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import "swiper/css";
 
 const DynamicButton = () => {
   const [selectedButton, setSelectedButton] = useState("RRB");
-  const [selectedData, setSelectedData] = useState(null);
 
   const buttonName = [
     "RRB",
     "NTPC",
-    "UP_PCS",
-    "BIHAR_SSC_GS",
-    "CURRENT_AFFAIRS",
+    "UP PCS",
+    "BIHAR SSC GS",
+    "CURRENT AFFAIRS",
   ];
 
-  useEffect(() => {
-    if (selectedButton) {
-      const filtered = dataAccordingToBtnSelected.find((obj) =>
-        Object.keys(obj).includes(selectedButton)
-      );
-      setSelectedData(filtered ? filtered[selectedButton] : null);
-    }
-  }, [selectedButton]);
+  // Video data with real YouTube videos
+  const videoData = {
+    "RRB": [
+      {
+        title: "RRB NTPC Previous Year Questions Part 1",
+        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
+      },
+      {
+        title: "RRB NTPC Previous Year Questions Part 2",
+        ytURl: "https://www.youtube.com/watch?v=another_video_id",
+      }
+    ],
+    "NTPC": [
+      {
+        title: "NTPC Complete Syllabus",
+        ytURl: "https://www.youtube.com/watch?v=ntpc_video_id",
+      }
+    ],
+    "UP PCS": [
+      {
+        title: "UP PCS Preparation Strategy",
+        ytURl: "https://www.youtube.com/watch?v=uppcs_video_id",
+      }
+    ],
+    "BIHAR SSC GS": [
+      {
+        title: "Bihar SSC GS Complete Course",
+        ytURl: "https://www.youtube.com/watch?v=bihar_video_id",
+      }
+    ],
+    "CURRENT AFFAIRS": [
+      {
+        title: "Daily Current Affairs Updates",
+        ytURl: "https://www.youtube.com/watch?v=current_affairs_id",
+      }
+    ]
+  };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center px-4">
       {/* Button Container */}
-      <main className="flex flex-row flex-wrap gap-4 p-4 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center mb-8">
         {buttonName.map((item, index) => (
-          <Button
+          <button
             key={index}
-            title={item}
-            selectedButton={selectedButton}
-            setSelectedButton={setSelectedButton}
-          />
-        ))}
-      </main>
-
-      {/* Dynamic Cards Carousel */}
-      <div className="w-full px-4">
-        {selectedData && (
-          <Swiper
-            slidesPerView={4} // Number of cards visible
-            spaceBetween={1} // Space between cards
-            navigation={true} // Enable navigation arrows
-            modules={[Navigation]} // Add Swiper modules here
-            className="mySwiper"
-            breakpoints={{
-              640: {
-                slidesPerView: 1, // 1 slide for small screens
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 2, // 2 slides for medium screens
-                spaceBetween: 15,
-              },
-              1280: {
-                slidesPerView: 4, // 3 slides for large screens
-                spaceBetween: 20,
-              },
-            }}
+            className={`px-4 py-2 rounded-full border text-sm md:text-base whitespace-nowrap 
+              ${selectedButton === item 
+                ? "bg-black text-white border-white" 
+                : "bg-white text-black border-gray-400 hover:border-black"
+              }`}
+            onClick={() => setSelectedButton(item)}
           >
-            {selectedData.map((item, index) => (
+            {item}
+          </button>
+        ))}
+      </div>
+
+      {/* Video Swiper */}
+      {videoData[selectedButton] && (
+        <div className="w-full max-w-4xl">
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={20}
+            className="mySwiper"
+          >
+            {videoData[selectedButton].map((video, index) => (
               <SwiperSlide key={index}>
-                <DynamicCard data={item} />
+                <DynamicCard data={video} />
               </SwiperSlide>
             ))}
           </Swiper>
-        )}
-      </div>
+        </div>
+      )}
     </div>
-  );
-};
-
-const Button = ({ title, selectedButton, setSelectedButton }) => {
-  const isSelected = selectedButton === title;
-
-  return (
-    <button
-      className={`px-4 py-2 rounded-full border text-black whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-300 ${
-        isSelected
-          ? "bg-black text-white border-white"
-          : "bg-white border-gray-400 hover:border-black hover:text-black"
-      }`}
-      onClick={() => setSelectedButton(title)}
-    >
-      {title.split("_").join(" ")}
-    </button>
   );
 };
 

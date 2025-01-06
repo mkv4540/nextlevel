@@ -71,21 +71,21 @@ export default function NcertSubject() {
         </div>
       </nav>
 
-      <main className="min-h-screen bg-gray-100 py-8 px-4">
+      <main className="min-h-screen bg-gray-100 py-8 px-4 pt-20">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8 text-gray-800 capitalize">
+          <h1 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 capitalize">
             NCERT {subject} Books
           </h1>
 
           {/* Class Selection */}
-          <div className="mb-8 bg-white rounded-lg p-6 shadow-lg">
-            <h2 className="text-xl font-semibold mb-4 text-gray-800">Select Class</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
+          <div className="mb-6 bg-white rounded-lg p-4 shadow-lg">
+            <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">Select Class</h2>
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 md:gap-4">
               {classes.map((classNum) => (
                 <button
                   key={classNum}
                   onClick={() => setSelectedClass(classNum)}
-                  className={`p-4 rounded-lg text-lg font-medium transition-all duration-200 ${
+                  className={`p-2 md:p-4 rounded-lg text-sm md:text-base font-medium transition-all duration-200 ${
                     selectedClass === classNum
                       ? 'bg-blue-500 text-white shadow-md'
                       : 'bg-white text-gray-700 hover:bg-blue-50 hover:shadow-md border border-gray-200'
@@ -99,22 +99,22 @@ export default function NcertSubject() {
 
           {/* Chapter List */}
           {selectedClass && chapters[selectedClass] && (
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <h2 className="text-xl font-semibold mb-6 text-gray-800">
+            <div className="bg-white rounded-lg p-4 shadow-lg">
+              <h2 className="text-lg md:text-xl font-semibold mb-4 text-gray-800">
                 Class {selectedClass} Chapters
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {chapters[selectedClass].map((chapter) => (
                   <div
                     key={chapter.id}
-                    className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 gap-2"
                   >
-                    <span className="text-gray-700 font-medium">{chapter.title}</span>
+                    <span className="text-gray-700 font-medium text-sm md:text-base">{chapter.title}</span>
                     <button
                       onClick={() => handleDownload(chapter.pdfUrl)}
-                      className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200 flex items-center space-x-2"
+                      className="w-full sm:w-auto px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-200"
                     >
-                      <span>Download PDF</span>
+                      Download PDF
                     </button>
                   </div>
                 ))}
