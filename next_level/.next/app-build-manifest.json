@@ -17,15 +17,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/page.js"
     ],
-    "/studymaterial/page": [
+    "/api/verifyAdmin/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/studymaterial/page.js"
-    ],
-    "/ncert/[subject]/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/ncert/[subject]/page.js"
+      "static/chunks/app/api/verifyAdmin/route.js"
     ]
   }
 }
