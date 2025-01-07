@@ -5,84 +5,70 @@ import { useRouter } from "next/navigation";
 
 const HeroSection = () => {
   const router = useRouter(); // Initialize the router
+  
   return (
-    <div className="flex flex-row w-full h-[600px] bg-gradient-to-t from-white to-cyan-100">
+    <div className="flex flex-col md:flex-row w-full min-h-[400px] md:h-[600px] bg-gradient-to-t from-white to-cyan-100 px-4 py-8 md:py-0">
       {/* Left Content */}
-      <div className="flex-1 flex justify-start items-center pl-8">
-        <div className="flex flex-col gap-10">
+      <div className="flex-1 flex justify-center md:justify-start items-center md:pl-8">
+        <div className="flex flex-col gap-6 md:gap-10">
           <div>
-            <h1 className="text-[60px] font-bold text-black font-open-sans flex gap-2 ml-8 perspective-1000">
+            <h1 className="text-3xl md:text-[60px] font-bold text-black font-open-sans flex flex-col md:flex-row md:gap-2 text-center md:text-left md:ml-8 perspective-1000">
               <span
-                className="inline-block"
+                className="inline-block animate-moveToScreen"
                 style={{
-                  animationName: "moveToScreen",
-                  animationDuration: "1s",
-                  animationTimingFunction: "ease-in-out",
                   animationDelay: "0s",
-                  animationFillMode: "forwards",
                 }}
               >
                 NEXT
               </span>
               <span
-                className="inline-block"
+                className="inline-block animate-moveToScreen"
                 style={{
-                  animationName: "moveToScreen",
-                  animationDuration: "1s",
-                  animationTimingFunction: "ease-in-out",
                   animationDelay: "0.3s",
-                  animationFillMode: "forwards",
                 }}
               >
                 LEVEL
               </span>
               <span
-                className="inline-block"
+                className="inline-block animate-moveToScreen"
                 style={{
-                  animationName: "moveToScreen",
-                  animationDuration: "1s",
-                  animationTimingFunction: "ease-in-out",
                   animationDelay: "0.6s",
-                  animationFillMode: "forwards",
                 }}
               >
                 ACADEMY
               </span>
             </h1>
-            <p className="text-lg mb-1 ml-9">
+            <p className="text-base md:text-lg mb-1 text-center md:text-left md:ml-9">
               Learn <span className="text-xl text-green-600">►</span> Practice{" "}
               <span className="text-xl text-green-600">►</span> Improve{" "}
               <span className="text-xl text-green-600">►</span> Succeed
             </p>
           </div>
-          <div>
-            <p className="text-lg mb-2 mt-1 ml-8">
+          <div className="text-center md:text-left">
+            <p className="text-base md:text-lg mb-2 mt-1 md:ml-8">
               Start your preparation for selections. For Free!
             </p>
-            <div>
-              <button
-                onClick={() => router.push("/quiz")}
-                className="bg-green-600 text-white px-6 py-4 text-lg rounded-full shadow-md mt-5 ml-8 hover:bg-green-700 transition duration-300"
-              >
-                Get Started For Free Quiz
-              </button>
-            </div>
+            <button
+              onClick={() => router.push("/quiz")}
+              className="bg-green-600 text-white px-4 md:px-6 py-3 md:py-4 text-base md:text-lg rounded-full shadow-md mt-4 md:mt-5 md:ml-8 hover:bg-green-700 transition duration-300 w-full md:w-auto"
+            >
+              Get Started For Free Quiz
+            </button>
           </div>
         </div>
       </div>
 
       {/* Right Content */}
-      <div className="flex-1 flex justify-center items-center">
+      <div className="flex-1 flex justify-center items-center mt-8 md:mt-0">
         <Image
-          src="/try1.png" // Use a public folder image
+          src="/try1.png"
           alt="Hero Image"
           width={500}
           height={400}
-          className="animate-imageZoom"
+          className="animate-imageZoom w-full max-w-[300px] md:max-w-[500px]"
         />
       </div>
 
-      {/* CSS Animation */}
       <style jsx>{`
         @keyframes moveToScreen {
           0% {
@@ -111,8 +97,12 @@ const HeroSection = () => {
           }
         }
 
-        .animate-imageZoom {
+        :global(.animate-imageZoom) {
           animation: imageZoom 1.5s ease-in-out;
+        }
+
+        :global(.animate-moveToScreen) {
+          animation: moveToScreen 1s ease-in-out forwards;
         }
       `}</style>
     </div>

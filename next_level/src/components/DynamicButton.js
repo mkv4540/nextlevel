@@ -1,10 +1,10 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import DynamicCard from "./DynamicCard"; // Import your card component
-import { dataAccordingToBtnSelected } from "../utils/data"; // Import your data
+import DynamicCard from "./DynamicCard";
+import { dataAccordingToBtnSelected } from "../utils/data";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css"; // Import Swiper CSS
+import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
@@ -30,69 +30,86 @@ const DynamicButton = () => {
   }, [selectedButton]);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center max-w-[1400px] mx-auto">
       {/* Button Container */}
-      <main className="flex flex-row flex-wrap gap-4 p-4 justify-center">
-        {buttonName.map((item, index) => (
-          <Button
-            key={index}
-            title={item}
-            selectedButton={selectedButton}
-            setSelectedButton={setSelectedButton}
-          />
-        ))}
-      </main>
-
-      {/* Dynamic Cards Carousel */}
-      <div className="w-full px-4">
-        {selectedData && (
-          <Swiper
-            slidesPerView={4} // Number of cards visible
-            spaceBetween={1} // Space between cards
-            navigation={true} // Enable navigation arrows
-            modules={[Navigation]} // Add Swiper modules here
-            className="mySwiper"
-            breakpoints={{
-              640: {
-                slidesPerView: 1, // 1 slide for small screens
-                spaceBetween: 10,
-              },
-              1024: {
-                slidesPerView: 2, // 2 slides for medium screens
-                spaceBetween: 15,
-              },
-              1280: {
-                slidesPerView: 4, // 3 slides for large screens
-                spaceBetween: 20,
-              },
-            }}
+      <div className="flex flex-wrap gap-3 justify-center mb-8 px-4">
+        {buttonName.map((item) => (
+          <button
+            key={item}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all
+              ${selectedButton === item 
+                ? "bg-blue-600 text-white" 
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+              }`}
+            onClick={() => setSelectedButton(item)}
           >
-            {selectedData.map((item, index) => (
-              <SwiperSlide key={index}>
-                <DynamicCard data={item} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        )}
+            {item.split("_").join(" ")}
+          </button>
+        ))}
       </div>
+
+      {/* Video Cards */}
+      {selectedData && (
+        <div className="w-full px-4">
+          {/* Mobile View (Single Card) */}
+          <div className="md:hidden">
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={20}
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              {selectedData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex justify-center">
+                    <DynamicCard data={item} />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Tablet View (2 Cards) */}
+          <div className="hidden md:block lg:hidden">
+            <Swiper
+              slidesPerView={2}
+              spaceBetween={20}
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              {selectedData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex justify-center">
+                    <DynamicCard data={item} />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+
+          {/* Desktop View (4 Cards) */}
+          <div className="hidden lg:block">
+            <Swiper
+              slidesPerView={4}
+              spaceBetween={20}
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              {selectedData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="flex justify-center">
+                    <DynamicCard data={item} />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      )}
     </div>
-  );
-};
-
-const Button = ({ title, selectedButton, setSelectedButton }) => {
-  const isSelected = selectedButton === title;
-
-  return (
-    <button
-      className={`px-4 py-2 rounded-full border text-black whitespace-nowrap overflow-hidden text-ellipsis transition-all duration-300 ${
-        isSelected
-          ? "bg-black text-white border-white"
-          : "bg-white border-gray-400 hover:border-black hover:text-black"
-      }`}
-      onClick={() => setSelectedButton(title)}
-    >
-      {title.split("_").join(" ")}
-    </button>
   );
 };
 

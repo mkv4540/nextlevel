@@ -18,43 +18,30 @@ export default function Home() {
 
   // Render the authenticated content
   return (
-    <div>
+    <div className="min-h-screen">
       <HeroSection />
-      <div className="text-center text-black text-4xl animate-fadeInDown">
-        <h1
-          style={{
-            textAlign: "center",
-            color: "Black",
-            fontSize: "40px",
-          }}
-        >
+      
+      <div className="px-4 py-8 md:py-12">
+        <h1 className="text-2xl md:text-4xl font-bold text-black text-center animate-fadeInDown">
           EXPLORE OUR COURSES
         </h1>
       </div>
+
       <DynamicButton />
-      <div className="mt-8 text-3xl font-bold text-black flex justify-center text-center animate-slideInLeft">
-        <h2
-          style={{
-            marginTop: "30px",
-            fontSize: "30px",
-            fontWeight: "bold",
-            color: "Black",
-            display: "flex", // Use flexbox for centering
-            justifyContent: "center", // Center horizontally
-            alignItems: "center", // Center vertically
-            textAlign: "center",
-          }}
-        >
+
+      <div className="px-4 py-6 md:py-8">
+        <h2 className="text-xl md:text-3xl font-bold text-black text-center animate-slideInLeft">
           Practice Quizzes
         </h2>
       </div>
+
       <QuizCard quizData={quizData} />
-      <div className="p-5">
-        <h1 className="text-xl font-bold">Contact Us</h1>
-        <p className="text-gray-700">Contact details go here...</p>
+
+      <div className="p-4 md:p-5">
+        <h1 className="text-lg md:text-xl font-bold mb-2">Contact Us</h1>
+        <p className="text-sm md:text-base text-gray-700">Contact details go here...</p>
       </div>
 
-      {/* Animations */}
       <style jsx>{`
         @keyframes fadeInDown {
           0% {
