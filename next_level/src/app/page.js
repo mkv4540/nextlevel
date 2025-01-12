@@ -4,9 +4,13 @@ import DynamicButton from "../components/DynamicButton";
 import HeroSection from "../components/HeroSection";
 import QuizCard from "../components/QuizCard";
 import { quizData } from "../utils/quizData";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const { isLoaded, userId } = useAuth();
+  const router = useRouter();
+
+
 
   return (
     <div className="min-h-screen">
