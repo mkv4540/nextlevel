@@ -117,32 +117,32 @@ export default function Home() {
           Learn and prepare for government exams with resources from our YouTube channel.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          {courses.map((course) => (
-            <div
-              key={course.id}
-              className="group card hover:scale-105 transition-transform duration-300 bg-white shadow-lg rounded-lg overflow-hidden"
-            >
-              <Image
-                src={course.imgSrc}
-                alt={course.title}
-                width={300}
-                height={200}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{course.title}</h3>
-                <p className="text-gray-700 text-sm">{course.description}</p>
-                <p className="text-gray-600 text-xs mt-2">Teacher: {course.teacher}</p>
-                <button
-                  onClick={() => handleNavigate(course.id)}
-                  className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
-                >
-                  Visit Notes
-                </button>
-              </div>
+        {courses.map((course) => (
+          <div
+            key={course.id}
+            className="group card hover:scale-105 transition-transform duration-300 bg-white shadow-lg rounded-lg overflow-hidden"
+          >
+            <Image
+              src={course.imgSrc}
+              alt={course.title}
+              width={300}
+              height={200}
+              className="w-full h-48 object-cover"
+            />
+            <div className="p-4">
+              <h3 className="text-lg font-semibold">{course.title}</h3>
+              <p className="text-gray-700 text-sm">{course.description}</p>
+              <p className="text-gray-600 text-xs mt-2">Teacher: {course.teacher}</p>
+              <button
+                onClick={() => handleNavigate(course.id)}
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+              >
+                Visit Notes
+              </button>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       </section>
     </main>
   );

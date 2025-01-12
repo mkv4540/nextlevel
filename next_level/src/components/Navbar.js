@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useAuth, SignInButton, SignOutButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isLoaded, userId } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -15,17 +17,19 @@ export default function Navbar() {
     <nav className="fixed top-0 w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo Section */}
+      {/* Logo Section */}
           <div className="flex items-center gap-2">
-            <Image
-              src="/logo.png"
-              alt="Logo"
-              width={40}
-              height={40}
-              className="cursor-pointer"
-            />
-            <span className="text-black font-semibold text-sm md:text-base">Next Level Academy</span>
-          </div>
+        <Image
+          src="/logo.png"
+          alt="Logo"
+          width={40}
+          height={40}
+          className="cursor-pointer"
+        />
+            <span className="text-black font-semibold text-sm md:text-base">
+              Next Level Academy
+            </span>
+      </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -51,36 +55,62 @@ export default function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-black hover:text-gray-500">
-              Home
-            </Link>
-            <Link href="/about" className="text-black hover:text-gray-500">
-              About
-            </Link>
-            <Link href="/studymaterial" className="text-black hover:text-gray-500">
-              Study Material
-            </Link>
+        <Link href="/" className="text-black hover:text-gray-500">
+          Home
+        </Link>
+        <Link href="/about" className="text-black hover:text-gray-500">
+          About
+        </Link>
+        <Link href="/studymaterial" className="text-black hover:text-gray-500">
+          Study Material
+        </Link>
             <Link href="/ncert" className="text-black hover:text-gray-500">
               NCERT Books
             </Link>
-            <Link href="/contact" className="text-black hover:text-gray-500">
-              Contact
-            </Link>
-          </div>
+            <Link href="/quiz" className="text-black hover:text-gray-500">
+              Quiz
+              </Link>
+            <Link 
+              href="/reward-quiz" 
+              className="text-black hover:text-gray-500 relative"
+            >
+              Reward Quiz
+              <span className="absolute -top-1 -right-6 bg-red-500 text-white text-xs px-1 rounded">
+                New
+              </span>
+              </Link>
+        <Link href="/contact" className="text-black hover:text-gray-500">
+          Contact
+        </Link>
+      </div>
 
           {/* Desktop Search and Login */}
           <div className="hidden md:flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="p-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
-            />
-            <button className="px-3 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition">
-              Search
-            </button>
-            <button className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
-              Login
-            </button>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="p-1 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-green-300"
+        />
+        <button className="px-3 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition">
+          Search
+        </button>
+            {isLoaded && (
+              <>
+                {userId ? (
+                  <SignOutButton>
+                    <button className="px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition">
+                      Sign Out
+                    </button>
+                  </SignOutButton>
+                ) : (
+                  <SignInButton>
+                    <button className="px-3 py-1 bg-green-600 text-white rounded-md hover:bg-green-700 transition">
+                      Sign In
+                    </button>
+                  </SignInButton>
+                )}
+              </>
+            )}
           </div>
         </div>
 
@@ -100,6 +130,15 @@ export default function Navbar() {
               <Link href="/ncert" className="px-4 py-2 text-black hover:bg-gray-100">
                 NCERT Books
               </Link>
+              <Link href="/quiz" className="px-4 py-2 text-black hover:bg-gray-100">
+                Quiz
+              </Link>
+              <Link href="/reward-quiz" className="px-4 py-2 text-black hover:bg-gray-100 flex items-center">
+                Reward Quiz
+                <span className="ml-2 bg-red-500 text-white text-xs px-1 rounded">
+                  New
+                </span>
+              </Link>
               <Link href="/contact" className="px-4 py-2 text-black hover:bg-gray-100">
                 Contact
               </Link>
@@ -114,9 +153,23 @@ export default function Navbar() {
                 <button className="w-full mt-2 px-3 py-2 bg-gray-600 text-white rounded-md">
                   Search
                 </button>
-                <button className="w-full mt-2 px-3 py-2 bg-green-600 text-white rounded-md">
-                  Login
-                </button>
+                {isLoaded && (
+                  <>
+                    {userId ? (
+                      <SignOutButton>
+                        <button className="w-full mt-2 px-3 py-2 bg-red-600 text-white rounded-md">
+                          Sign Out
+                        </button>
+                      </SignOutButton>
+                    ) : (
+                      <SignInButton>
+                        <button className="w-full mt-2 px-3 py-2 bg-green-600 text-white rounded-md">
+                          Sign In
+        </button>
+                      </SignInButton>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </div>
