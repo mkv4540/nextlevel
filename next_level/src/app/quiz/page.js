@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import NameDialog from "../../components/NameDialog";
@@ -10,6 +11,7 @@ import { decode } from 'html-entities';
 const API_URL = 'https://opentdb.com/api.php?amount=50&type=multiple';
 
 function QuizPage() {
+    const { isLoaded, userId } = useAuth();
     const router = useRouter();
 
     // State to manage quiz questions, answers, and related information
@@ -29,6 +31,20 @@ function QuizPage() {
     const [reportReason, setReportReason] = useState(""); // Reason for reporting a question
     const [additionalInfo, setAdditionalInfo] = useState(""); // Additional information for reporting
     const [shouldNavigate, setShouldNavigate] = useState(false); // Navigation flag after quiz completion
+
+    // Show a loading state while authentication is being loaded
+    if (!isLoaded) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
+            </div>
+        );
+    }
+
+    // Redirect to sign-in if not authenticated
+    if (!userId) {
+        return <RedirectToSignIn />;
+    }
 
     // Fetch questions from API once the name dialog is closed
     useEffect(() => {

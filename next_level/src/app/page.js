@@ -1,22 +1,13 @@
 "use client";
-import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
 import DynamicButton from "../components/DynamicButton";
 import HeroSection from "../components/HeroSection";
 import QuizCard from "../components/QuizCard";
 import { quizData } from "../utils/quizData";
 
 export default function Home() {
-  // const { isLoaded, userId } = useAuth();
+  const { isLoaded, userId } = useAuth();
 
-  // // Show a loader until authentication is loaded
-  // if (!isLoaded) return <div>Loading...</div>;
-
-  // // Redirect unauthenticated users to sign-in page
-  // if (!userId) {
-  //   return <RedirectToSignIn />;
-  // }
-
-  // Render the authenticated content
   return (
     <div className="min-h-screen">
       <HeroSection />
@@ -29,13 +20,16 @@ export default function Home() {
 
       <DynamicButton />
 
+      {/* Free Quizzes Section */}
       <div className="px-4 py-6 md:py-8">
-        <h2 className="text-xl md:text-3xl font-bold text-black text-center animate-slideInLeft">
+        <h2 className="text-xl md:text-3xl font-bold text-black text-center">
           Practice Quizzes
         </h2>
+        <p className="text-center text-gray-600 mb-8">
+          Improve your knowledge with our free practice quizzes
+        </p>
+        <QuizCard quizData={quizData} />
       </div>
-
-      <QuizCard quizData={quizData} />
 
       <div className="p-4 md:p-5">
         <h1 className="text-lg md:text-xl font-bold mb-2">Contact Us</h1>
