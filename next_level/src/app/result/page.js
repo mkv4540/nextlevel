@@ -5,6 +5,7 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { decode } from 'html-entities';
 
+
 // Registering ChartJS components for the Pie chart
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -27,8 +28,8 @@ function ResultPage() {
   }
 
   // Constants and derived data
-  const totalQuestions = 50; // Total number of quiz questions
-  const attempted = result.answers?.filter(
+  const totalQuestions =  result.questions?.length || 0; // Total number of quiz questions
+  const attempted = result.answers?.filter( 
     answer => answer.givenAnswer !== null && answer.givenAnswer !== undefined
   ).length || 0; // Count of attempted questions
   const correct = result.answers?.filter(
@@ -102,7 +103,6 @@ function ResultPage() {
                       { label: "Correct Answers", value: correct },
                       { label: "Incorrect Answers", value: incorrect },
                       { label: "Not Attempted", value: notAttempted },
-                      { label: "Quiz Language", value: "English" },
                       { label: "Negative Marking Percentage", value: "1%" },
                       { label: "Marks for Correct Answer", value: "1" },
                       { label: "Your Score", value: score }

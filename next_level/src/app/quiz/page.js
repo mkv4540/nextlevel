@@ -2,76 +2,179 @@
 
 import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import NameDialog from "../../components/NameDialog";
 import CountdownTimer from "../../components/CountdownTimer";
 import { decode } from 'html-entities';
 
 // Quiz API URL
-const API_URL = 'https://opentdb.com/api.php?amount=50&type=multiple';
+const TRANSCRIPT_API_URL = '/api/transcript';
+const QUIZ_API_URL = '/api/generate-quiz';
 
 function QuizPage() {
     const { isLoaded, userId } = useAuth();
     const router = useRouter();
-
-    // State to manage quiz questions, answers, and related information
+    const searchParams = useSearchParams();
+    const videoId = searchParams.get('videoId');
     const [quizState, setQuizState] = useState({
-        questions: [], // Stores the list of quiz questions
-        answers: [], // User-selected answers for each question
-        markedForReview: [], // Flags for questions marked for review
-        loading: true, // Indicates whether questions are loading
-        shuffledOptions: [], // Shuffled options for each question
+        questions: [],
+        answers: [],
+        markedForReview: [],
+        loading: true,
+        shuffledOptions: [],
     });
+    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [timeLeft, setTimeLeft] = useState(3600);
+    const [showNameDialog, setShowNameDialog] = useState(true);
+    const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [showReportDialog, setShowReportDialog] = useState(false);
+    const [reportReason, setReportReason] = useState("");
+    const [additionalInfo, setAdditionalInfo] = useState("");
+    const [shouldNavigate, setShouldNavigate] = useState(false);
 
-    const [currentQuestion, setCurrentQuestion] = useState(0); // Tracks the current question index
-    const [timeLeft, setTimeLeft] = useState(3600); // Time remaining for the quiz
-    const [showNameDialog, setShowNameDialog] = useState(true); // Show/hide name dialog
-    const [showConfirmDialog, setShowConfirmDialog] = useState(false); // Show/hide confirmation dialog
-    const [showReportDialog, setShowReportDialog] = useState(false); // Show/hide report dialog
-    const [reportReason, setReportReason] = useState(""); // Reason for reporting a question
-    const [additionalInfo, setAdditionalInfo] = useState(""); // Additional information for reporting
-    const [shouldNavigate, setShouldNavigate] = useState(false); // Navigation flag after quiz completion
 
-    // Show a loading state while authentication is being loaded
-    if (!isLoaded) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
-            </div>
-        );
-    }
+    const handleNameSubmit = (name) => {
+        console.log('Submitted Name:', name);
+        if (name) {
+            setShowNameDialog(false);
+        } else {
+            router.push("/");
+        }
+    };
 
-    // Redirect to sign-in if not authenticated
-    if (!userId) {
-        return <RedirectToSignIn />;
-    }
+    const handleAnswerSelect = (selectedAnswerIndex) => {
+        setQuizState(prev => ({
+            ...prev,
+            answers: prev.answers.map((ans, i) =>
+                i === currentQuestion ? selectedAnswerIndex : ans
+            ),
+        }));
+    };
 
-    // Fetch questions from API once the name dialog is closed
+    const handleMarkForReview = () => {
+        setQuizState(prev => ({
+            ...prev,
+            markedForReview: prev.markedForReview.map((mark, i) =>
+                i === currentQuestion ? !mark : mark
+            ),
+        }));
+        handleNext();
+    };
+
+    const handleNext = () => {
+        if (currentQuestion < quizState.questions.length - 1) {
+            setCurrentQuestion(prev => prev + 1);
+        }
+    };
+
+    const handlePrevious = () => {
+        if (currentQuestion > 0) {
+            setCurrentQuestion(prev => prev - 1);
+        }
+    };
+
+    const handleSaveNext = () => {
+        if (quizState.answers[currentQuestion] !== null) {
+            handleNext();
+        }
+    };
+
+    const handleFinish = () => {
+        const result = {
+            videoId: videoId,
+            answers: quizState.answers.map((answerIndex, questionIndex) => {
+                if (answerIndex === null) {
+                    return {
+                        givenAnswer: null,
+                        correctAnswer: quizState.questions[questionIndex].correct_answer,
+                        isCorrect: false
+                    };
+                }
+
+                const selectedAnswer = quizState.shuffledOptions[questionIndex][answerIndex];
+                return {
+                    givenAnswer: selectedAnswer,
+                    correctAnswer: quizState.questions[questionIndex].correct_answer,
+                    isCorrect: selectedAnswer === quizState.questions[questionIndex].correct_answer
+                };
+            }),
+            questions: quizState.questions.map(q => ({
+                text: q.question,
+                correct_answer: q.correct_answer
+            })),
+            markedForReview: quizState.markedForReview,
+            timeSpent: 3600 - timeLeft,
+        };
+
+        localStorage.setItem("quizResults", JSON.stringify(result));
+        setShouldNavigate(true);
+    };
+
+    const handleReportSubmit = () => {
+        console.log("Report Submitted:", {
+            reason: reportReason,
+            additionalInfo: additionalInfo,
+        });
+        setShowReportDialog(false);
+        setReportReason("");
+        setAdditionalInfo("");
+    };
+
+    // Effects
+    useEffect(() => {
+        if (!videoId && !showNameDialog) {
+            console.error('No video ID provided');
+            router.push('/');
+            return;
+        }
+    }, [videoId, showNameDialog, router]);
+
     useEffect(() => {
         if (!showNameDialog) {
             async function fetchQuestions() {
                 try {
-                    const response = await fetch(API_URL);
-                    const data = await response.json();
-                    const allQuestions = data.results;
+                    const transcriptResponse = await fetch(TRANSCRIPT_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            videoId: videoId
+                        })
+                    });
 
-                    // Helper function to shuffle array elements
-                    function shuffleArray(array) {
-                        let currentIndex = array.length, randomIndex;
-                        while (currentIndex !== 0) {
-                            randomIndex = Math.floor(Math.random() * currentIndex);
-                            currentIndex--;
-                            [array[currentIndex], array[randomIndex]] =
-                                [array[randomIndex], array[currentIndex]];
-                        }
-                        return array;
+                    if (!transcriptResponse.ok) {
+                        throw new Error(`Transcript fetch error: ${transcriptResponse.status}`);
                     }
 
-                    // Shuffle options for each question
-                    const shuffledOptionsArray = allQuestions.map(question => {
-                        const options = [...question.incorrect_answers, question.correct_answer];
-                        return shuffleArray(options);
+                    const transcriptData = await transcriptResponse.json();
+                    console.log('Transcript Data:', transcriptData);
+                    const transcript = transcriptData.transcript;
+
+                    const quizResponse = await fetch(QUIZ_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ transcript })
                     });
+
+                    if (!quizResponse.ok) {
+                        throw new Error(`Quiz fetch error: ${quizResponse.status}`);
+                    }
+
+                    const data = await quizResponse.json();
+                    console.log('Quiz Data:', data);
+
+                    // Map the API response to the required format
+                    const allQuestions = data.questions.map((question, index) => ({
+                        question: question,
+                        correct_answer: data.answers[index],
+                        incorrect_answers: data.options[index].filter(opt => opt !== data.answers[index])
+                    }));
+
+                    // Create shuffled options
+                    const shuffledOptionsArray = data.options;
 
                     setQuizState({
                         questions: allQuestions,
@@ -90,14 +193,13 @@ function QuizPage() {
         }
     }, [showNameDialog]);
 
-    // Countdown timer effect
     useEffect(() => {
         if (!showNameDialog && timeLeft > 0) {
             const timer = setInterval(() => {
                 setTimeLeft(prev => {
                     if (prev <= 1) {
                         clearInterval(timer);
-                        handleFinish(); // Automatically finish quiz when time runs out
+                        handleFinish();
                         return 0;
                     }
                     return prev - 1;
@@ -108,103 +210,32 @@ function QuizPage() {
         }
     }, [showNameDialog, timeLeft]);
 
-    // Handle name submission from NameDialog
-    const handleNameSubmit = (name) => {
-        console.log('Submitted Name:', name);
-        if (name) {
-            setShowNameDialog(false);
-        } else {
-            router.push("/"); // Navigate to home if no name is provided
-        }
-    };
-
-    // Handle selection of an answer
-    const handleAnswerSelect = (selectedAnswerIndex) => {
-        setQuizState(prev => ({
-            ...prev,
-            answers: prev.answers.map((ans, i) =>
-                i === currentQuestion ? selectedAnswerIndex : ans
-            ),
-        }));
-    };
-
-    // Toggle marking the current question for review
-    const handleMarkForReview = () => {
-        setQuizState(prev => ({
-            ...prev,
-            markedForReview: prev.markedForReview.map((mark, i) =>
-                i === currentQuestion ? !mark : mark
-            ),
-        }));
-        handleNext(); // Automatically navigate to the next question
-    };
-
-    // Navigate to the next question
-    const handleNext = () => {
-        if (currentQuestion < quizState.questions.length - 1) {
-            setCurrentQuestion(prev => prev + 1);
-        }
-    };
-
-    // Navigate to the previous question
-    const handlePrevious = () => {
-        if (currentQuestion > 0) {
-            setCurrentQuestion(prev => prev - 1);
-        }
-    };
-
-    // Save the current answer and navigate to the next question
-    const handleSaveNext = () => {
-        if (quizState.answers[currentQuestion] !== null) {
-            handleNext();
-        }
-    };
-
-    // Finish the quiz and calculate results
-    const handleFinish = () => {
-        const result = {
-            answers: quizState.answers.map((answerIndex, questionIndex) => {
-                const question = quizState.questions[questionIndex];
-                if (answerIndex === null) {
-                    return {
-                        givenAnswer: null,
-                        correctAnswer: question.correct_answer,
-                        isCorrect: false
-                    };
-                }
-
-                const selectedAnswer = quizState.shuffledOptions[questionIndex][answerIndex];
-                return {
-                    givenAnswer: selectedAnswer,
-                    correctAnswer: question.correct_answer,
-                    isCorrect: selectedAnswer === question.correct_answer
-                };
-            }),
-            questions: quizState.questions.map(q => ({
-                text: q.question,
-                correct_answer: q.correct_answer
-            })),
-            markedForReview: quizState.markedForReview,
-            timeSpent: 3600 - timeLeft,
-        };
-
-        localStorage.setItem("quizResults", JSON.stringify(result));
-        setShouldNavigate(true); // Trigger navigation to results page
-    };
-
-    // Navigate to the result page after quiz completion
     useEffect(() => {
         if (shouldNavigate) {
             router.push("/result");
         }
     }, [shouldNavigate, router]);
 
-    // Render NameDialog when quiz starts
+    // Loading state
+    if (!isLoaded || !videoId) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900" />
+            </div>
+        );
+    }
+
+    // Authentication check
+    if (!userId) {
+        return <RedirectToSignIn />;
+    }
+
+    // Name dialog
     if (showNameDialog) {
         return <NameDialog onSubmit={handleNameSubmit} />;
     }
 
-    // Render a loader while questions are being fetched
+    // Loading questions
     if (quizState.loading) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -213,24 +244,25 @@ function QuizPage() {
         );
     }
 
-    // Handle question reporting
-    const handleReportSubmit = () => {
-        console.log("Report Submitted:", {
-            reason: reportReason,
-            additionalInfo: additionalInfo,
-        });
 
-        // Example: Send report to a server
-        setShowReportDialog(false);
-        setReportReason("");
-        setAdditionalInfo("");
+    const getQuestionCounts = (state) => {
+        return {
+            answered: state.answers.filter(a => a !== null).length,
+            notAnswered: state.answers.filter(a => a === null).length,
+            markedForReview: state.markedForReview.filter(mark => mark).length,
+            answeredAndMarked: state.answers.filter((a, i) => 
+                a !== null && state.markedForReview[i]
+            ).length,
+            notVisited: state.answers.filter((a, i) => 
+                a === null && !state.markedForReview[i]
+            ).length
+        };
     };
-
 
     return (
 
       <div className="min-h-screen bg-gray-50">
-            {/* Fixed Header with Timer */}
+            {/* Header with Timer */}
             <div >
                 <div className="max-w-7xl mx-auto p-4">
                     <CountdownTimer timeLeft={timeLeft} />
@@ -399,52 +431,65 @@ function QuizPage() {
           <aside className="bg-white border rounded-lg p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">Question Palette</h3>
             <div className="grid grid-cols-6 gap-2 mb-6">
-              {Array(50).fill(null).map((_, index) => (
+                {quizState.questions.map((_, index) => {
+                    const isAnswered = quizState.answers[index] !== null;
+                    const isMarked = quizState.markedForReview[index];
+                    const isCurrent = index === currentQuestion;
+                    
+                    let buttonClass = "h-10 w-full rounded text-sm font-medium ";
+                    
+                    if (isAnswered && isMarked) {
+                        buttonClass += "bg-purple-500 text-white"; // Answered and marked
+                    } else if (isAnswered) {
+                        buttonClass += "bg-green-500 text-white"; // Answered
+                    } else if (isMarked) {
+                        buttonClass += "bg-blue-500 text-white"; // Marked for review
+                    } else if (isCurrent) {
+                        buttonClass += "bg-yellow-500 text-black"; // Current question
+                    } else {
+                        buttonClass += "bg-gray-200 text-black"; // Not visited
+                    }
+                    
+                    return (
                 <button
                   key={index}
                   onClick={() => setCurrentQuestion(index)}
-                  className={`h-10 w-full rounded text-sm font-medium
-                    ${quizState.answers[index] !== null && quizState.markedForReview[index]
-                      ? 'bg-blue-500 text-white'
-                      : quizState.answers[index] !== null
-                        ? 'bg-green-500 text-white'
-                        : quizState.markedForReview[index]
-                          ? 'bg-purple-500 text-white'
-                          : index === currentQuestion
-                            ? 'bg-yellow-500 text-black'
-                            : 'bg-gray-200 text-black'}`}
+                            className={buttonClass}
                 >
                   {index + 1}
                 </button>
-              ))}
+                    );
+                })}
             </div>
 
             <div className="space-y-2 border-t pt-4">
               {[
                 {
-                  label: 'Answered',
-                  color: 'bg-green-500',
-                  count: quizState.answers.filter((a) => a !== null).length,
-                },
-                {
-                  label: 'Not Answered',
-                  color: 'bg-red-500',
-                  count: quizState.answers.filter((a) => a === null && !quizState.markedForReview[quizState.answers.indexOf(a)]).length,
-                },
-                {
-                  label: 'Marked for Review',
-                  color: 'bg-purple-500',
-                  count: quizState.markedForReview.filter((mark) => mark).length,
-                },
-                {
-                  label: 'Not Visited',
-                  color: 'bg-gray-300',
-                  count: quizState.answers.filter((a, index) => a === null && !quizState.markedForReview[index]).length,
-                },
+                        label: "Answered",
+                        color: "bg-green-500",
+                        count: getQuestionCounts(quizState).answered
+                    },
+                    {
+                        label: "Not Answered",
+                        color: "bg-red-500",
+                        count: getQuestionCounts(quizState).notAnswered
+                    },
+                    {
+                        label: "Marked for Review",
+                        color: "bg-blue-500",
+                        count: getQuestionCounts(quizState).markedForReview
+                    },
+                    {
+                        label: "Answered & Marked for Review",
+                        color: "bg-purple-500",
+                        count: getQuestionCounts(quizState).answeredAndMarked
+                    }
               ].map((item, index) => (
                 <div key={index} className="flex items-center gap-2">
                   <div className={`w-4 h-4 ${item.color} rounded`} />
-                  <span className="text-sm text-gray-600">{item.label}: {item.count}</span>
+                        <span className="text-sm text-gray-600">
+                            {item.label}: {item.count}
+                        </span>
                 </div>
               ))}
             </div>
@@ -453,7 +498,7 @@ function QuizPage() {
               onClick={() => setShowConfirmDialog(true)}
               className="w-full mt-6 py-3 bg-red-500 text-white rounded hover:bg-red-600"
             >
-              Stop This Quiz
+                Submit Quiz
             </button>
           </aside>
         </div>
@@ -462,10 +507,18 @@ function QuizPage() {
       {showConfirmDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Are you sure?</h2>
-            <p className="mb-6 text-gray-600">
-              Your not attempted questions: {quizState.answers.filter(a => a === null).length}
-            </p>
+                <h2 className="text-xl font-bold text-gray-800 mb-4">Submit Quiz?</h2>
+                <div className="space-y-2 mb-6">
+                    <p className="text-gray-600">
+                        Answered Questions: {getQuestionCounts(quizState).answered}
+                    </p>
+                    <p className="text-gray-600">
+                        Not Attempted Questions: {getQuestionCounts(quizState).notAnswered}
+                    </p>
+                    <p className="text-gray-600">
+                        Questions Marked for Review: {getQuestionCounts(quizState).markedForReview}
+                    </p>
+                </div>
             <div className="flex justify-end gap-4">
               <button
                 onClick={() => setShowConfirmDialog(false)}
@@ -477,7 +530,7 @@ function QuizPage() {
                 onClick={handleFinish}
                 className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
               >
-                Submit Test
+                        Submit
               </button>
             </div>
           </div>
