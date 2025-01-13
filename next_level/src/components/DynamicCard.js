@@ -63,4 +63,4 @@ const DynamicCard = ({ data }) => {
   );
 };
 
-export default DynamicCard;
+export default DynamicCard;                                                                                        

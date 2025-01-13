@@ -1,3 +1,5 @@
 {
-  "/api/generate-quiz/route": "app/api/generate-quiz/route.js"
+  "/ncert/page": "app/ncert/page.js",
+  "/page": "app/page.js",
+  "/quiz/page": "app/quiz/page.js"
 }
