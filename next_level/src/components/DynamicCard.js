@@ -22,7 +22,7 @@ const DynamicCard = ({ data }) => {
       {/* Thumbnail Section */}
       <div className="relative aspect-video">
         <img
-          src={`https://img.youtube.com/vi/${getVideoId(data.ytURl)}/maxresdefault.jpg`}
+          src={`https://img.youtube.com/vi/${getVideoId(data.ytURl)}/sddefault.jpg`}
           alt={data.title}
           className="w-full h-full object-cover"
         />
