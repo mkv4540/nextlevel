@@ -1,5 +1,10 @@
+<<<<<<< Updated upstream:next_level/.next/types/app/[id]/page.ts
 // File: C:\Users\sahil\Desktop\nextlevel\next_level\src\app\[id]\page.js
 import * as entry from '../../../../src/app/[id]/page.js'
+=======
+// File: C:\Users\Sayan Chakraborty\Documents\GitHub\nextlevel\next_level\src\app\layout.js
+import * as entry from '../../../src/app/layout.js'
+>>>>>>> Stashed changes:next_level/.next/types/app/layout.ts
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
 type TEntry = typeof import('../../../../src/app/[id]/page.js')

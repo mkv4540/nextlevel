@@ -19,6 +19,7 @@
       "static/chunks/57-c9cbd56aab1a438b.js",
       "static/chunks/app/layout-c6c8379c7a22bd2f.js"
     ],
+<<<<<<< Updated upstream
     "/api/upload/route": [
       "static/chunks/webpack-24ba7a82bffd338d.js",
       "static/chunks/4bd1b696-3cc6266a7f2c7054.js",
@@ -196,6 +197,13 @@
       "static/chunks/main-app-4127049b189e84a8.js",
       "static/chunks/173-cd350d877da2d153.js",
       "static/chunks/app/wallet/page-30a9cf23a927c43e.js"
+=======
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/page.css",
+      "static/chunks/app/page.js"
+>>>>>>> Stashed changes
     ]
   }
 }
