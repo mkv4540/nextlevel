@@ -8,6 +8,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  images: {
+    domains: ['img.youtube.com'], // Add the allowed domain here
+  },
 };
 
 module.exports = nextConfig;
