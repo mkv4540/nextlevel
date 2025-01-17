@@ -5,17 +5,11 @@ import DynamicCard from "./DynamicCard";
 import YoutubePlayer from "./YoutubePlayer";
 
 import { dataAccordingToBtnSelected } from "../utils/data";
-// import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-// import { Navigation } from "swiper/modules";
+
 
 const DynamicButton = () => {
-  // const [selectedButton, setSelectedButton] = useState("RRB");
-  // console.log("data",dataAccordingToBtnSelected[0].RRB)
-  // const [selectedData, setSelectedData] = useState(dataAccordingToBtnSelected[0].RRB);
-
-  // const [selectedVideoId, setSelectedVideoId] = useState(null);
   const [selectedButton, setSelectedButton] = useState("RRB"); // Default button selection
   const [selectedData, setSelectedData] = useState([]); // Initially empty, will be populated dynamically
   const [selectedVideoId, setSelectedVideoId] = useState(null);
