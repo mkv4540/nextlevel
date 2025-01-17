@@ -39,15 +39,6 @@ const DynamicCard = ({ videoId, title, onButtonClick }) => {
   console.log(id);
   console.log("title is ", title);
   return (
-<<<<<<< Updated upstream
-    <div className="w-[300px] bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {/* Thumbnail Section */}
-      <div className="relative aspect-video">
-        <img
-          src={`https://img.youtube.com/vi/${getVideoId(data.ytURl)}/sddefault.jpg`}
-          alt={data.title}
-          className="w-full h-full object-cover"
-=======
     <div
       className="w-full max-w-xs transition-transform ease-in-out duration-80 card hover:scale-105 md:p-5 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
       style={{
@@ -80,7 +71,7 @@ const DynamicCard = ({ videoId, title, onButtonClick }) => {
           className="rounded-lg "
           width={200}
           height={200}
->>>>>>> Stashed changes
+
         />
         {/* <button onClick={onButtonClick}>bfdbfd </button> */}
         <div
