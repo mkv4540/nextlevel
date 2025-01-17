@@ -70,7 +70,7 @@ const DynamicButton = () => {
   return (
     <div className="flex flex-col items-center max-w-[1400px] mx-auto">
       {/* Button Container */}
-      <div className="flex flex-wrap justify-center gap-3 px-4 mb-8">
+      {/* <div className="flex flex-wrap justify-center gap-3 px-4 mb-8">
         {buttonName.map((item) => (
           <button
             key={item}
@@ -84,7 +84,7 @@ const DynamicButton = () => {
             {item.split("_").join(" ")}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Video Cards */}
 

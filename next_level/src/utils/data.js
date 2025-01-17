@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const API_KEY = "AIzaSyArx_5AqPXMDEsTtow6DxMtdJoirgHB3EU"; // Replace with your YouTube API Key
+
+const API_KEY = "AIzaSyA8ogCn2FYcjTsM4qxVriuhQelBnz9YoE0"; // Replace with your YouTube API Key
 const CHANNEL_ID = "UCk8OgHxULn_1gK6Nn_9rxVg"; // Replace with the YouTube Channel ID
 
-// Function to fetch the top 5 videos from a YouTube channel
+// Function to fetch the top 5 latest videos from a YouTube channel
 const fetchTopVideos = async () => {
   try {
     const response = await axios.get(
@@ -13,8 +14,9 @@ const fetchTopVideos = async () => {
           key: API_KEY,
           channelId: CHANNEL_ID,
           part: "snippet",
-          order: "date", // You can change to "viewCount" or "rating" if needed
-          maxResults: 5, // Fetch top 5 videos
+          order: "date", // Ensure videos are ordered by date
+          maxResults: 5, // Fetch top 5 latest videos
+          type: 'video' // Ensure only videos are fetched
         },
       }
     );
@@ -34,18 +36,17 @@ const fetchTopVideos = async () => {
 
 // Example usage for the updated data
 export const dataAccordingToBtnSelected = async () => {
-  const RRBVideos = await fetchTopVideos();
-  const NTPCVideos = await fetchTopVideos();
-  const UP_PCSVideos = await fetchTopVideos();
-  const BIHAR_SSC_GSVideos = await fetchTopVideos();
-  const CURRENT_AFFAIRSVideos = await fetchTopVideos();
+  const videos = await fetchTopVideos(); // Fetch videos once and use for all categories
 
   return [
-    { RRB: RRBVideos },
-    { NTPC: NTPCVideos },
-    { UP_PCS: UP_PCSVideos },
-    { BIHAR_SSC_GS: BIHAR_SSC_GSVideos },
-    { CURRENT_AFFAIRS: CURRENT_AFFAIRSVideos },
+    { RRB: videos },
+    { NTPC: videos },
+    { UP_PCS: videos },
+    { BIHAR_SSC_GS: videos },
+    { CURRENT_AFFAIRS: videos },
   ];
 };
+
+
+
 

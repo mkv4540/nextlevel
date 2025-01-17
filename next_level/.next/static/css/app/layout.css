@@ -636,6 +636,12 @@ video {
 .mt-8 {
   margin-top: 2rem;
 }
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .block {
   display: block;
 }
@@ -653,9 +659,6 @@ video {
 }
 .hidden {
   display: none;
-}
-.aspect-video {
-  aspect-ratio: 16 / 9;
 }
 .h-0 {
   height: 0px;
@@ -689,6 +692,9 @@ video {
 }
 .h-full {
   height: 100%;
+}
+.min-h-\[2\.5rem\] {
+  min-height: 2.5rem;
 }
 .min-h-\[400px\] {
   min-height: 400px;
@@ -725,9 +731,6 @@ video {
 }
 .w-96 {
   width: 24rem;
-}
-.w-\[300px\] {
-  width: 300px;
 }
 .w-\[400px\] {
   width: 400px;
@@ -971,6 +974,9 @@ video {
 .bg-black {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
+}
+.bg-black\/5 {
+  background-color: rgb(0 0 0 / 0.05);
 }
 .bg-black\/50 {
   background-color: rgb(0 0 0 / 0.5);
@@ -1370,11 +1376,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
-.transition-shadow {
-  transition-property: box-shadow;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
 .transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1467,6 +1468,10 @@ body {
 .hover\:border-purple-300:hover {
   --tw-border-opacity: 1;
   border-color: rgb(216 180 254 / var(--tw-border-opacity, 1));
+}
+
+.hover\:bg-black\/10:hover {
+  background-color: rgb(0 0 0 / 0.1);
 }
 
 .hover\:bg-blue-100:hover {
