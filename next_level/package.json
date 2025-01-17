@@ -11,7 +11,11 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.722.0",
     "@clerk/nextjs": "^6.9.6",
+<<<<<<< Updated upstream
     "axios": "^1.7.9",
+=======
+    "aws-sdk": "^2.1692.0",
+>>>>>>> Stashed changes
     "chart.js": "^4.4.7",
     "cheerio": "^1.0.0-rc.10",
     "dotenv": "^16.4.7",
