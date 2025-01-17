@@ -1,124 +1,52 @@
-export const dataAccordingToBtnSelected = [
-  {
-    RRB: [
+import axios from "axios";
+
+
+const API_KEY = "AIzaSyA8ogCn2FYcjTsM4qxVriuhQelBnz9YoE0"; // Replace with your YouTube API Key
+const CHANNEL_ID = "UCk8OgHxULn_1gK6Nn_9rxVg"; // Replace with the YouTube Channel ID
+
+// Function to fetch the top 5 latest videos from a YouTube channel
+const fetchTopVideos = async () => {
+  try {
+    const response = await axios.get(
+      `https://www.googleapis.com/youtube/v3/search`,
       {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=D7dFe4vT2ig",
-      },
-      {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=pDUPMrJ9hmc",
-      },
-      {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=D7dFe4vT2ig",
-      },
-      {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=pDUPMrJ9hmc",
-      },
-      {
-        title: "Video From Youtube RRB",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-    ],
-  },
-  {
-    NTPC: [
-      {
-        title: "Video From Youtube NTPC",
-        ytURl:
-          "https://www.youtube.com/watch?v=BjProjejky0&list=PLQhp_jRk65mDlYJc24w3FanDrygDOhah2",
-        ytThumb: "https://img.youtube.com/vi/pDUPMrJ9hmc/0.jpg",
-      },
-      {
-        title: "Video From Youtube NTPC",
-        ytURl: "https://www.youtube.com/watch?v=qb6zkDSL6gU&list",
-      },
-      {
-        title: "Video From Youtube NTPC",
-        ytURl:
-          "https://www.youtube.com/watch?v=2oIrVjf0LbA&list=PLQhp_jRk65mDlYJc24w3FanDrygDOhah2&index=3",
-      },
-      {
-        title: "Video From Youtube NTPC",
-        ytURl:
-          "https://www.youtube.com/watch?v=BjProjejky0&list=PLQhp_jRk65mDlYJc24w3FanDrygDOhah2",
-        ytThumb: "https://img.youtube.com/vi/pDUPMrJ9hmc/0.jpg",
-      },
-      {
-        title: "Video From Youtube NTPC",
-        ytURl: "https://www.youtube.com/watch?v=qb6zkDSL6gU&list",
-      },
-      {
-        title: "Video From Youtube NTPC",
-        ytURl:
-          "https://www.youtube.com/watch?v=2oIrVjf0LbA&list=PLQhp_jRk65mDlYJc24w3FanDrygDOhah2&index=3",
-      },
-    ],
-  },
-  {
-    UP_PCS: [
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube UP_PCS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-    ],
-  },
-  {
-    BIHAR_SSC_GS: [
-      {
-        title: "Video From Youtube BIHAR_SSC_GS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube BIHAR_SSC_GS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube BIHAR_SSC_GS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-    ],
-  },
-  {
-    CURRENT_AFFAIRS: [
-      {
-        title: "Video From Youtube CURRENT_AFFAIRS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube CURRENT_AFFAIRS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-      {
-        title: "Video From Youtube CURRENT_AFFAIRS",
-        ytURl: "https://www.youtube.com/watch?v=GB2kRJlR9v4",
-      },
-    ],
-  },
-];
+        params: {
+          key: API_KEY,
+          channelId: CHANNEL_ID,
+          part: "snippet",
+          order: "date", // Ensure videos are ordered by date
+          maxResults: 5, // Fetch top 5 latest videos
+          type: 'video' // Ensure only videos are fetched
+        },
+      }
+    );
+
+    // Map the API response to the desired format
+    const videos = response.data.items.map((item) => ({
+      title: item.snippet.title,
+      ytURl: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+    }));
+
+    return videos;
+  } catch (error) {
+    console.error("Error fetching YouTube videos:", error);
+    return [];
+  }
+};
+
+// Example usage for the updated data
+export const dataAccordingToBtnSelected = async () => {
+  const videos = await fetchTopVideos(); // Fetch videos once and use for all categories
+
+  return [
+    { RRB: videos },
+    { NTPC: videos },
+    { UP_PCS: videos },
+    { BIHAR_SSC_GS: videos },
+    { CURRENT_AFFAIRS: videos },
+  ];
+};
+
+
+
+
