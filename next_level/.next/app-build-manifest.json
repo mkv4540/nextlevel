@@ -12,10 +12,20 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
-    "/[id]/page": [
+    "/quiz/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[id]/page.js"
+      "static/chunks/app/quiz/page.js"
+    ],
+    "/api/transcript/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/transcript/route.js"
+    ],
+    "/api/generate-quiz/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/generate-quiz/route.js"
     ]
   }
 }

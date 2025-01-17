@@ -28,7 +28,7 @@ export default function Home() {
       <DynamicButton />
 
       {/* Free Quizzes Section */}
-      <div className="px-4 py-6 md:py-8">
+      {/* <div className="px-4 py-6 md:py-8">
         <h2 className="text-xl font-bold text-center text-black md:text-3xl">
           Practice Quizzes
         </h2>
@@ -36,7 +36,7 @@ export default function Home() {
           Improve your knowledge with our free practice quizzes
         </p>
         <QuizCard quizData={quizData} />
-      </div>
+      </div> */}
 
       <div className="p-4 md:p-5">
         <h1 className="mb-2 text-lg font-bold md:text-xl">Contact Us</h1>
