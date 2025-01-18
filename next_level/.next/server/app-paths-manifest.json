@@ -1,6 +1,0 @@
-{
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/studymaterial/page": "app/studymaterial/page.js",
-  "/ncert/[subject]/page": "app/ncert/[subject]/page.js",
-  "/admin/page": "app/admin/page.js"
-}

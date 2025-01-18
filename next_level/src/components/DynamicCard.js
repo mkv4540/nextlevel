@@ -1,59 +1,96 @@
-"use client";
+// DynamicCard.js
+import React from "react";
+import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+const getVideoId = (url) => {
+  try {
+    const parsedUrl = new URL(url); // Parse the URL
+    if (parsedUrl.searchParams.has("v")) {
+      // Standard format with ?v=
+      return parsedUrl.searchParams.get("v");
+    } else if (parsedUrl.pathname.startsWith("/embed/")) {
+      // Embed format
+      return parsedUrl.pathname.split("/embed/")[1];
+    } else if (parsedUrl.hostname === "youtu.be") {
+      // Shortened format
+      return parsedUrl.pathname.slice(1); // Remove the leading '/'
+    } else {
+      console.error("Unsupported URL format:", url);
+      return null;
+    }
+  } catch (error) {
+    console.error("Invalid URL:", url, error);
+    return null;
+  }
+};
 
-const DynamicCard = ({ data }) => {
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+const DynamicCard = ({ videoId, title, onButtonClick }) => {
   const router = useRouter();
-
-  const handleDropdownToggle = (e) => {
-    e.stopPropagation();
-    setDropdownVisible(!dropdownVisible);
-  };
-
-  const getVideoId = (url) => {
-    const videoId = url.split('v=')[1];
-    return videoId;
-  };
-
+  const navigateToQuiz = (videoId) => {
+  const id = getVideoId(videoId); // Get the video ID from the URL
+  if (videoId) {
+    router.push(`/quiz?videoId=${id}`); // Navigate to the quiz page
+  }
+};
+  console.log("video", videoId);
+  const id = getVideoId(videoId);
+  console.log(id);
+  console.log("title is ", title);
   return (
-    <div className="w-[300px] bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      {/* Thumbnail Section */}
-      <div className="relative aspect-video">
-        <img
-          src={`https://img.youtube.com/vi/${getVideoId(data.ytURl)}/sddefault.jpg`}
-          alt={data.title}
-          className="w-full h-full object-cover"
+    <div
+      className="w-full max-w-xs transition-transform ease-in-out duration-80 card hover:scale-105 md:p-5 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+      style={{
+        objectFit: "contain",
+        height: "auto",
+        border: "2px solid #e0e0e0",
+        padding: "1rem",
+        borderRadius: "12px",
+        boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)",
+        backgroundColor: "#ffffff",
+      }}
+    >
+      <div
+        className="thumbnail$buttons"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          height: "100%",
+          width: "100%",
+          padding: "0.1rem",
+          borderRadius: "8px",
+          position: "relative",
+          gap: "3rem",
+        }}
+      >
+        <Image
+          src={`https://img.youtube.com/vi/${id}/sddefault.jpg`}
+          alt="image"
+          className="rounded-lg "
+          width={200}
+          height={200}
+
         />
-        <div className="absolute inset-0 bg-black/5 hover:bg-black/10 transition-colors duration-300"></div>
-      </div>
-
-      {/* Content Section */}
-      <div className="p-4">
-        <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2 min-h-[2.5rem]">
-          {data.title}
-        </h3>
-
-        <p className="text-sm text-gray-600 mb-3">Next Level Academy</p>
-
-        <div className="flex gap-2">
+        {/* <button onClick={onButtonClick}>bfdbfd </button> */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "1px",
+            width: "100%",
+          }}
+        >
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(data.ytURl, "_blank");
-            }}
-            className="flex-1 px-3 py-2 bg-red-600 text-white text-sm font-semibold rounded hover:bg-red-700 transition-colors"
+            onClick={onButtonClick}
+            className="px-3 py-3 text-sm font-semibold text-white transition-colors bg-red-600 rounded flex-4 hover:bg-red-700"
           >
-            Watch on YouTube
+            Watch Lecture
           </button>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              const videoId = getVideoId(data.ytURl);
-              router.push(`/quiz?videoId=${videoId}`);
-            }}
-            className="px-3 py-2 bg-blue-600 text-white text-sm font-semibold rounded hover:bg-blue-700 transition-colors"
+            onClick={() => {navigateToQuiz(videoId)}}
+            className="px-3 py-3 text-sm font-semibold text-white transition-colors bg-blue-600 rounded flex-4 hover:bg-blue-700"
           >
             Quiz
           </button>

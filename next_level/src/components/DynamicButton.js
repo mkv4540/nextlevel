@@ -2,16 +2,48 @@
 
 import { useEffect, useState } from "react";
 import DynamicCard from "./DynamicCard";
+import YoutubePlayer from "./YoutubePlayer";
+
 import { dataAccordingToBtnSelected } from "../utils/data";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+
 
 const DynamicButton = () => {
-  const [selectedButton, setSelectedButton] = useState("RRB");
-  const [selectedData, setSelectedData] = useState(null);
+  const [selectedButton, setSelectedButton] = useState("RRB"); // Default button selection
+  const [selectedData, setSelectedData] = useState([]); // Initially empty, will be populated dynamically
+  const [selectedVideoId, setSelectedVideoId] = useState(null);
 
+
+  const handleOpenModal = (videoId) => {
+    setSelectedVideoId(videoId);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedVideoId(null);
+  };
+
+  const getVideoId = (url) => {
+    try {
+      const parsedUrl = new URL(url); // Parse the URL
+      if (parsedUrl.searchParams.has("v")) {
+        // Standard format with ?v=
+        return parsedUrl.searchParams.get("v");
+      } else if (parsedUrl.pathname.startsWith("/embed/")) {
+        // Embed format
+        return parsedUrl.pathname.split("/embed/")[1];
+      } else if (parsedUrl.hostname === "youtu.be") {
+        // Shortened format
+        return parsedUrl.pathname.slice(1); // Remove the leading '/'
+      } else {
+        console.error("Unsupported URL format:", url);
+        return null;
+      }
+    } catch (error) {
+      console.error("Invalid URL:", url, error);
+      return null;
+    }
+  };
   const buttonName = [
     "RRB",
     "NTPC",
@@ -21,24 +53,30 @@ const DynamicButton = () => {
   ];
 
   useEffect(() => {
-    if (selectedButton) {
-      const filtered = dataAccordingToBtnSelected.find((obj) =>
-        Object.keys(obj).includes(selectedButton)
-      );
-      setSelectedData(filtered ? filtered[selectedButton] : null);
-    }
+    const fetchData = async () => {
+      const data = await dataAccordingToBtnSelected();
+      if (selectedButton) {
+        const filtered = data.find((obj) =>
+          Object.keys(obj).includes(selectedButton)
+        );
+        setSelectedData(filtered ? filtered[selectedButton] : null);
+      }
+    };
+    fetchData();
   }, [selectedButton]);
+
+
 
   return (
     <div className="flex flex-col items-center max-w-[1400px] mx-auto">
       {/* Button Container */}
-      <div className="flex flex-wrap gap-3 justify-center mb-8 px-4">
+      {/* <div className="flex flex-wrap justify-center gap-3 px-4 mb-8">
         {buttonName.map((item) => (
           <button
             key={item}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all
-              ${selectedButton === item 
-                ? "bg-blue-600 text-white" 
+              ${selectedButton === item
+                ? "bg-blue-600 text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             onClick={() => setSelectedButton(item)}
@@ -46,69 +84,28 @@ const DynamicButton = () => {
             {item.split("_").join(" ")}
           </button>
         ))}
-      </div>
+      </div> */}
 
       {/* Video Cards */}
-      {selectedData && (
-        <div className="w-full px-4">
-          {/* Mobile View (Single Card) */}
-          <div className="md:hidden">
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={20}
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-            >
-              {selectedData.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <div className="flex justify-center">
-                    <DynamicCard data={item} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
 
-          {/* Tablet View (2 Cards) */}
-          <div className="hidden md:block lg:hidden">
-            <Swiper
-              slidesPerView={2}
-              spaceBetween={20}
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-            >
-              {selectedData.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <div className="flex justify-center">
-                    <DynamicCard data={item} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-
-          {/* Desktop View (4 Cards) */}
-          <div className="hidden lg:block">
-            <Swiper
-              slidesPerView={4}
-              spaceBetween={20}
-              navigation={true}
-              modules={[Navigation]}
-              className="mySwiper"
-            >
-              {selectedData.map((item, index) => (
-                <SwiperSlide key={index}>
-                  <div className="flex justify-center">
-                    <DynamicCard data={item} />
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
+<div>
+      {/* Multiple Cards */}
+      <div style={{ display: "flex", gap: "1rem" , padding:"12px"}}>
+        {selectedData.map((video) => (
+          <DynamicCard
+          style={{ display: "flex" , padding:"0px"}}
+            key={video.title}
+            title={video.title}
+            videoId={video.ytURl}
+            onButtonClick={() => handleOpenModal(getVideoId(video.ytURl))}
+          />
+        ))}
+      </div>
+      {selectedVideoId && (
+        <YoutubePlayer videoId={selectedVideoId} onClose={handleCloseModal} />
       )}
+    </div>
+
     </div>
   );
 };
