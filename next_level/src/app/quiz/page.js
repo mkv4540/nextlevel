@@ -10,6 +10,7 @@ import { decode } from 'html-entities';
 // Quiz API URL
 const TRANSCRIPT_API_URL = '/api/transcript';
 const QUIZ_API_URL = '/api/generate-quiz';
+const Time_per_question = 45;
 
 function QuizPageContent() {
     const { isLoaded, userId } = useAuth();
@@ -24,7 +25,7 @@ function QuizPageContent() {
         shuffledOptions: [],
     });
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [timeLeft, setTimeLeft] = useState(3600);
+    const [timeLeft, setTimeLeft] = useState(null);//iniitialiaze with 0
     const [showNameDialog, setShowNameDialog] = useState(true);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
     const [showReportDialog, setShowReportDialog] = useState(false);
@@ -162,7 +163,9 @@ function QuizPageContent() {
                         }
                         return options;
                     });
-
+                    // Calculate total time based on the number of questions
+                    const totalTime = allQuestions.length * Time_per_question;
+                    setTimeLeft(totalTime);
                     setQuizState({
                         questions: allQuestions,
                         answers: Array(allQuestions.length).fill(null),
