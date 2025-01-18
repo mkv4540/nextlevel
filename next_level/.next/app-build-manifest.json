@@ -17,10 +17,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/admin/quiz/page.js"
     ],
-    "/_not-found/page": [
+    "/api/transcript/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/chunks/app/api/transcript/route.js"
+    ],
+    "/api/generate-quiz/route": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/api/generate-quiz/route.js"
     ]
   }
 }

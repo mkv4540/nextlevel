@@ -1,19 +1,15 @@
-
 // 'use client';
 
 // import { useState } from 'react';
-// import AWS from 'aws-sdk';
+// import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-// // Configure AWS SDK
-// AWS.config.update({
-//   region: 'ap-south-1', // Replace with your AWS region
-//   credentials: new AWS.Credentials({
-//     accessKeyId: 'AKIAWQUOZH5VCL33PTO6', // Replace with your AWS access key
-//     secretAccessKey: '6EK+nA685dgPBlDJjLua0ZRyUL7zX2JrV7YFRSvU', // Replace with your AWS secret key
-//   }),
+// const s3 = new S3Client({
+//   region: 'ap-south-1',
+//   credentials: {
+//     accessKeyId: 'AKIAWQUOZH5VCL33PTO6',
+//     secretAccessKey: '6EK+nA685dgPBlDJjLua0ZRyUL7zX2JrV7YFRSvU',
+//   },
 // });
-
-// const s3 = new AWS.S3();
 
 // export default function QuizAdmin() {
 //   const [videoUrl, setVideoUrl] = useState('');
@@ -24,7 +20,7 @@
 //   const handleGenerateTranscript = async () => {
 //     try {
 //       setMessage('');
-//       setQuizData(null); // Clear previous quiz data
+//       setQuizData(null);
 
 //       const videoIdMatch = videoUrl.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
 //       if (!videoIdMatch || !videoIdMatch[1]) {
@@ -40,16 +36,14 @@
 //         body: JSON.stringify({ videoId }),
 //       });
 
+//       if (!response.ok) throw new Error('Failed to fetch transcript.');
+
 //       const data = await response.json();
-//       if (response.ok) {
-//         setTranscript(data.transcript);
-//         setMessage('Transcript generated successfully!');
-//       } else {
-//         setMessage(`Error: ${data.error}`);
-//       }
+//       setTranscript(data.transcript);
+//       setMessage('Transcript generated successfully!');
 //     } catch (error) {
 //       console.error('Error generating transcript:', error);
-//       setMessage('An unexpected error occurred.');
+//       setMessage('An unexpected error occurred while generating the transcript.');
 //     }
 //   };
 
@@ -68,51 +62,55 @@
 //         body: JSON.stringify({ transcript }),
 //       });
 
+//       if (!response.ok) throw new Error('Failed to generate quiz.');
+
 //       const data = await response.json();
-//       if (response.ok) {
-//         setQuizData(data);
-//         setMessage('Quiz generated successfully!');
-//         setTranscript('');
-//       } else {
-//         setMessage(`Error: ${data.error}`);
-//         setTranscript('');
-//       }
+//       setQuizData(data);
+//       setMessage('Quiz generated successfully!');
+//       setTranscript('');
 //     } catch (error) {
 //       console.error('Error generating quiz:', error);
 //       setMessage('An unexpected error occurred while generating the quiz.');
 //       setTranscript('');
 //     }
 //   };
-
+  
+  
 //   const handleUploadToS3 = async () => {
 //     try {
 //       setMessage('');
-
+  
 //       if (!quizData) {
 //         setMessage('Please generate the quiz first.');
 //         return;
 //       }
-
+  
+//       // Convert quizData to a string and then to a buffer
+//       const fileBuffer = Buffer.from(JSON.stringify(quizData));
+  
+//       // Extract videoId from the URL
 //       const videoIdMatch = videoUrl.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
 //       const videoId = videoIdMatch ? videoIdMatch[1] : 'quiz';
 //       const fileName = `${videoId}-quiz.json`;
-
+  
+//       // Set parameters for the S3 upload
 //       const params = {
-//         Bucket: 'quiz-nextlevelquiz', // Replace with your S3 bucket name
+//         Bucket: 'quiz-nextlevelquiz',
 //         Key: fileName,
-//         Body: JSON.stringify(quizData),
+//         Body: fileBuffer,
 //         ContentType: 'application/json',
 //       };
-
-//       // Await the upload process
-//       const uploadResponse = await s3.upload(params).promise();
+  
+//       const command = new PutObjectCommand(params);
+//       await s3.send(command);
+  
 //       setMessage(`Quiz uploaded successfully as ${fileName} in the S3 bucket!`);
-//       console.log('S3 Upload Response:', uploadResponse);
 //     } catch (error) {
 //       console.error('Error uploading to S3:', error);
 //       setMessage('An error occurred while uploading the quiz to S3. Check console logs for details.');
 //     }
 //   };
+  
 
 //   return (
 //     <div className="p-4 max-w-lg mx-auto">
@@ -160,11 +158,6 @@
 //     </div>
 //   );
 // }
-
-
-// Ensure you install AWS SDK if you haven't already
-// npm install aws-sdk
-
 'use client';
 
 import { useState } from 'react';
@@ -182,12 +175,13 @@ export default function QuizAdmin() {
   const [videoUrl, setVideoUrl] = useState('');
   const [message, setMessage] = useState('');
   const [transcript, setTranscript] = useState('');
-  const [quizData, setQuizData] = useState(null);
+  const [quizData, setQuizData] = useState([]);
+  const [selectedQuestions, setSelectedQuestions] = useState({});
 
   const handleGenerateTranscript = async () => {
     try {
       setMessage('');
-      setQuizData(null);
+      setQuizData([]);
 
       const videoIdMatch = videoUrl.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
       if (!videoIdMatch || !videoIdMatch[1]) {
@@ -217,7 +211,6 @@ export default function QuizAdmin() {
   const handleGenerateQuiz = async () => {
     try {
       setMessage('');
-
       if (!transcript) {
         setMessage('Please generate the transcript first.');
         return;
@@ -232,52 +225,70 @@ export default function QuizAdmin() {
       if (!response.ok) throw new Error('Failed to generate quiz.');
 
       const data = await response.json();
-      setQuizData(data);
+      if (!data.questions || !Array.isArray(data.questions)) {
+        throw new Error('Invalid quiz data format.');
+      }
+
+      setQuizData(data.questions);
       setMessage('Quiz generated successfully!');
-      setTranscript('');
     } catch (error) {
       console.error('Error generating quiz:', error);
       setMessage('An unexpected error occurred while generating the quiz.');
-      setTranscript('');
     }
   };
-  
-  
+
+  const handleCheckboxChange = (index) => {
+    setSelectedQuestions((prevSelectedQuestions) => {
+      const updatedSelection = { ...prevSelectedQuestions };
+      if (updatedSelection[index]) {
+        delete updatedSelection[index];
+      } else {
+        updatedSelection[index] = true;
+      }
+      return updatedSelection;
+    });
+  };
+
   const handleUploadToS3 = async () => {
     try {
       setMessage('');
-  
-      if (!quizData) {
+
+      if (!quizData.length) {
         setMessage('Please generate the quiz first.');
         return;
       }
-  
-      // Convert quizData to a string and then to a buffer
-      const fileBuffer = Buffer.from(JSON.stringify(quizData));
-  
-      // Extract videoId from the URL
+
+      const selectedQuiz = quizData.filter((_, index) => selectedQuestions[index]);
+
+      if (!selectedQuiz.length) {
+        setMessage('Please select at least one question to upload.');
+        return;
+      }
+
+      const fileBuffer = Buffer.from(
+        JSON.stringify({ questions: selectedQuiz }, null, 2)
+      );
+
       const videoIdMatch = videoUrl.match(/(?:v=|\/)([0-9A-Za-z_-]{11})/);
       const videoId = videoIdMatch ? videoIdMatch[1] : 'quiz';
       const fileName = `${videoId}-quiz.json`;
-  
-      // Set parameters for the S3 upload
+
       const params = {
         Bucket: 'quiz-nextlevelquiz',
         Key: fileName,
         Body: fileBuffer,
         ContentType: 'application/json',
       };
-  
+
       const command = new PutObjectCommand(params);
       await s3.send(command);
-  
+
       setMessage(`Quiz uploaded successfully as ${fileName} in the S3 bucket!`);
     } catch (error) {
       console.error('Error uploading to S3:', error);
       setMessage('An error occurred while uploading the quiz to S3. Check console logs for details.');
     }
   };
-  
 
   return (
     <div className="p-4 max-w-lg mx-auto">
@@ -308,20 +319,29 @@ export default function QuizAdmin() {
         Upload to S3 Bucket
       </button>
       {message && <p className="mt-4 text-lg">{message}</p>}
-      {transcript && (
-        <div className="mt-4 p-4 bg-gray-100 rounded">
-          <h2 className="text-xl font-bold mb-2">Transcript:</h2>
-          <p>{transcript}</p>
+      {quizData.map((question, index) => (
+        <div key={index} className="mb-4 p-2 border rounded">
+          <label className="flex items-center space-x-2">
+            <input
+              type="checkbox"
+              className="form-checkbox"
+              checked={selectedQuestions[index] || false}
+              onChange={() => handleCheckboxChange(index)}
+            />
+            <p className="font-bold">
+              Q{index + 1}: {question.text || 'No question text provided'}
+            </p>
+          </label>
+          <ul className="list-disc ml-5">
+            {(question.options || []).map((option, i) => (
+              <li key={i}>{option}</li>
+            ))}
+          </ul>
+          <p className="italic mt-2">
+            Answer: {question.answer || 'No answer provided'}
+          </p>
         </div>
-      )}
-      {quizData && (
-        <div className="mt-4 p-4 bg-gray-100 rounded">
-          <h2 className="text-xl font-bold mb-2">Quiz Data:</h2>
-          <pre className="whitespace-pre-wrap overflow-x-auto">
-            {JSON.stringify(quizData, null, 2)}
-          </pre>
-        </div>
-      )}
+      ))}
     </div>
   );
 }
