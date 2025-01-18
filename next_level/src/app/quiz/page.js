@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuth, RedirectToSignIn } from "@clerk/nextjs";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,Suspense  } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import NameDialog from "../../components/NameDialog";
 import CountdownTimer from "../../components/CountdownTimer";
@@ -11,7 +11,7 @@ import { decode } from 'html-entities';
 const TRANSCRIPT_API_URL = '/api/transcript';
 const QUIZ_API_URL = '/api/generate-quiz';
 
-function QuizPage() {
+function QuizPageContent() {
     const { isLoaded, userId } = useAuth();
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -540,4 +540,13 @@ function QuizPage() {
     );
 }
 
-export default QuizPage;
+
+
+export default function QuizPage() {
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <QuizPageContent />
+      </Suspense>
+    );
+  }
+

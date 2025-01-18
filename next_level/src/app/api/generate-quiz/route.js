@@ -133,14 +133,10 @@ export async function POST(request) {
 
     const allQuestions = [];
     const allOptions = [];
-    const allAnswers = [];
-    // Add limit of 10 questions
-    let questionCount = 0; // Initialize question counter
+    const allAnswers = []; // To store correct answers
 
     // Process each chunk and generate quiz questions
     for (const chunk of chunks) {
-      if (questionCount >= 10) break; // Stop if 10 questions are generated
-
       console.log('Processing chunk:', chunk.slice(0, 100)); // Log first 100 characters of the chunk for debugging
       const response = await openai.chat.completions.create({
         model: 'gpt-4',
@@ -151,7 +147,7 @@ export async function POST(request) {
           },
           {
             role: 'user',
-            content: `Generate 5 multiple-choice quiz questions in Hindi language based on this reference transcript. Do not directly copy questions, but take conceptual references. For each question, provide four options and indicate the correct answer clearly. Format your response as follows: 
+            content: `Generate 3 multiple-choice quiz questions in Hindi language based on this reference transcript.Do not directly copy questions, but take conceptual references. For each question, provide four options and indicate the correct answer clearly. Format your response as follows: 
           Q: <Question>
           Options: 
           1. Option 1
@@ -159,7 +155,7 @@ export async function POST(request) {
           3. Option 3
           4. Option 4
           Answer: <Correct Option (e.g., 1, 2, 3, or 4)>
-          also the questions you generate should be quite tough 
+          also the questions you generate should be quiet tough 
           The transcript is: ${chunk}`,
           },
         ],
@@ -182,16 +178,14 @@ export async function POST(request) {
       allQuestions.push(...parsedResult.questions);
       allOptions.push(...parsedResult.options);
       allAnswers.push(...parsedResult.answers);
-
-      questionCount += parsedResult.questions.length; // Update question counter
     }
 
-    // Return combined quiz questions, options, and answers (limited to 10)
+    // Return combined quiz questions, options, and answers
     return new Response(
       JSON.stringify({
-        questions: allQuestions.slice(0, 10), // Limit to 10 questions
-        options: allOptions.slice(0, 10),     // Their corresponding options
-        answers: allAnswers.slice(0, 10),     // Their corresponding answers
+        questions: allQuestions,
+        options: allOptions,
+        answers: allAnswers,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
