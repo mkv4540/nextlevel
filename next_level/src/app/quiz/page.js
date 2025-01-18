@@ -133,48 +133,35 @@ function QuizPageContent() {
         if (!showNameDialog) {
             async function fetchQuestions() {
                 try {
-                    const transcriptResponse = await fetch(TRANSCRIPT_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            videoId: videoId
-                        })
-                    });
+                    // Construct S3 URL
+                    const s3Url = `https://quiz-nextlevelquiz.s3.ap-south-1.amazonaws.com/${videoId}-quiz.json`;
 
-                    if (!transcriptResponse.ok) {
-                        throw new Error(`Transcript fetch error: ${transcriptResponse.status}`);
+                    // Fetch quiz data from S3
+                    const response = await fetch(s3Url);
+
+                    if (!response.ok) {
+                        throw new Error(`Quiz fetch error: ${response.status}`);
                     }
 
-                    const transcriptData = await transcriptResponse.json();
-                    console.log('Transcript Data:', transcriptData);
-                    const transcript = transcriptData.transcript;
-
-                    const quizResponse = await fetch(QUIZ_API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ transcript })
-                    });
-
-                    if (!quizResponse.ok) {
-                        throw new Error(`Quiz fetch error: ${quizResponse.status}`);
-                    }
-
-                    const data = await quizResponse.json();
+                    const data = await response.json();
                     console.log('Quiz Data:', data);
 
                     // Map the API response to the required format
                     const allQuestions = data.questions.map((question, index) => ({
-                        question: question,
-                        correct_answer: data.answers[index],
-                        incorrect_answers: data.options[index].filter(opt => opt !== data.answers[index])
+                        question: question.text,
+                        correct_answer: question.answer,
+                        incorrect_answers: question.options.filter(opt => opt !== question.answer)
                     }));
 
                     // Create shuffled options
-                    const shuffledOptionsArray = data.options;
+                    const shuffledOptionsArray = data.questions.map(question => {
+                        const options = [...question.options];
+                        for (let i = options.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [options[i], options[j]] = [options[j], options[i]];
+                        }
+                        return options;
+                    });
 
                     setQuizState({
                         questions: allQuestions,
@@ -191,7 +178,7 @@ function QuizPageContent() {
 
             fetchQuestions();
         }
-    }, [showNameDialog]);
+    }, [showNameDialog, videoId]);
 
     useEffect(() => {
         if (!showNameDialog && timeLeft > 0) {
