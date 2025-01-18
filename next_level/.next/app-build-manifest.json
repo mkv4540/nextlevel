@@ -12,20 +12,15 @@
       "static/css/app/page.css",
       "static/chunks/app/page.js"
     ],
-    "/quiz/page": [
+    "/admin/quiz/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/quiz/page.js"
+      "static/chunks/app/admin/quiz/page.js"
     ],
-    "/api/transcript/route": [
+    "/_not-found/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/api/transcript/route.js"
-    ],
-    "/api/generate-quiz/route": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/api/generate-quiz/route.js"
+      "static/chunks/app/_not-found/page.js"
     ]
   }
 }

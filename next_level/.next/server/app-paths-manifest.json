@@ -1,7 +1,5 @@
 {
-  "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/api/generate-quiz/route": "app/api/generate-quiz/route.js",
-  "/api/transcript/route": "app/api/transcript/route.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
-  "/quiz/page": "app/quiz/page.js"
+  "/admin/quiz/page": "app/admin/quiz/page.js"
 }
