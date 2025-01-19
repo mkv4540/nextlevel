@@ -16,7 +16,9 @@ export async function POST(request) {
 
     // Fetch transcript using the constructed URL
     const transcript = await YoutubeTranscript.fetchTranscript(videoUrl);
-
+    if (!transcript) {
+      throw new Error("Transcript is disabled for this video");
+    }
     // Extract only the 'text' field from each transcript item
     const transcriptText = transcript.map(item => item.text).join(' ');
     console.log(transcriptText);
